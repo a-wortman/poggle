@@ -1,0 +1,12 @@
+:version:
+4
+
+:functions:
+checksum
+
+:components:
+Version: byte{4}
+IHL: byte{4}
+ServiceType: byte{8}
+Length: byte{16}
+Identification: byte{16}

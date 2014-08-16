@@ -1,0 +1,58 @@
+:ext:
+
+:version:
+
+:functions:
+nLen(bit{16}): bit{16}
+
+:components:
+BFinal:bit
+BNoCompression: bit{2} := b00
+BFixedHuffman: bit{2} := b01
+BDynamicHuffman: bit{2} := b10
+BError: bit{2} := b11
+BType: bit{2} := BNoCompression|BFixedHuffman|BDynamicHuffman|BError
+
+BlockHeader: bit{3} := BFinal:BType
+
+NonCompressedBlock: bit{len + size(Len) + size(nLen)} := Len\len:nLen(len):bit{len*2} where
+  Len: bit{16}
+
+DynamicHuffmanBlock: bit{_} := HuffmanBlock:HuffmanData:EndOfBlock where
+  LenLit1: bit{8} := b00110000-b10111111
+  LenLit2: bit{9} := b110010000-b111111111
+  LenLit3: bit{7} := b0000000-b0010111
+  LenLit4: bit{8} := b11000000-b11000111
+  EndOfBlock: bit{7} := b0000000
+
+  CodeLengthValue: bit{3}
+
+  HLit: bit{5}
+  HDist: bit{5}
+  HCLen: bit{4}
+
+  CodeLengthTableEntry := validCodes(CodeLengthCodeLength)
+  LitLenTableEntry := validCodes(CodeLengthTableEntry)
+  DistTableEntry := validCodes(CodeLengthTableEntry)
+
+  HuffmanBlock := CodeLengthSizes:CodeLengthTables
+  CodeLengthSizes := \HLit:\HDist:\HClen
+  CodeLengthTables := \CodeLengthTableEntry{HClen+4}:\LitLenTableEntry{HLit+257}:\DistTableEntry{HDist+1}
+
+  HuffmanData := ((LenLit1|LenLit2|LenLit3|LenLit4) & !EndOfBlock)*
+
+:export:
+DeflateBlock: {_} := BlockHeader:(
+  (BNoCompression? NonCompressedBlock) |
+  (BDynamicHuffman? DynamicHuffmanBlock) |
+  (BFixedHuffman? FixedHuffmanBlock)
+)
+
+:notes:
+big-endian
+
+bit-packed
+
+data elements are packed big-endian
+huffman codes are little-endian
+
