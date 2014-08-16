@@ -1,0 +1,59 @@
+:ext:
+[".gz", ".gzip"]
+
+:requires:
+deflate_data
+
+:version:
+4.2
+
+:functions:
+crc32(byte*): byte{4}
+crc16(byte*): byte{2} ->
+  crc32(byte*) -> (a:b:_) -> a:b
+
+:primitives:
+byte
+bit
+cString
+
+:components:
+ID1:byte := 0x1f
+ID2:byte := 0x8b
+ID := ID1:ID2
+CMdeflate := 0x08
+CMreserved := 0x00-0x07
+CM := CMdeflate|CMreserved
+FTEXT:bit
+FHCRC:bit
+FEXTRA:bit
+FNAME:bit
+FCOMMENT:bit
+FRESERVED:bit := 0
+FLG:byte := FTEXT:FHCRC:FEXTRA:FNAME:FCOMMENT:FRESERVED{3}
+MTIME:byte{4}
+XFL:byte
+OS:byte = 0|1|2|3|4|5|6|7|8|9|10|11|12|13|255
+XLEN:byte{2}
+NAME:cString
+COMMENT:cString
+CRC32:byte{4} := crc32(byte*)
+CDC16:byte{2} := crc32(byte*) -> (a:b:_)
+ISIZE:byte{4}
+
+HEADER := ID:CM:FLG:MTIME:XFL:OS
+EXTRA := XLEN:byte{$XLEN}
+
+SID: byte{2}
+EXTRALEN: byte{2}
+X2 := SID:EXTRALEN:byte{$EXTRALEN}
+
+file :=
+    HEADER
+  : FEXTRA? EXTRA
+  : FNAME? NAME
+  : FCOMMENT? COMMENT
+  : FHCRC? CRC16
+  : (CMDeflate? \DeflateBlock)
+  : crc32(deflateBlock)
+  : ISIZE
