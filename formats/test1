@@ -1,0 +1,10 @@
+:ext:
+[".foo"]
+
+:components:
+Header: byte := 0x44
+Length: byte
+Body: byte{Length}
+
+File := Header:Length:Body
+
