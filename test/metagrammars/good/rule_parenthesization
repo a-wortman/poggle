@@ -1,0 +1,7 @@
+:components:
+A := 0x04
+B := 0x30
+C := 0x24
+D := (A|B):C
+E := (A:B)|C
+

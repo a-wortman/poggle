@@ -1,0 +1,4 @@
+:components:
+A: byte
+B: byte{2}
+

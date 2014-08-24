@@ -1,0 +1,4 @@
+:components:
+A := "string without raw or c type"
+B := 256
+
