@@ -1,0 +1,5 @@
+:components:
+A: byte := 0x04
+B: byte := 0x40
+C: byte{2} := A:B
+
