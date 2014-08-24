@@ -1,0 +1,66 @@
+grammar Poggler
+
+%whitespace BLANK*
+
+start   <- ext? functions? components  { _ }
+
+functions <- ~':functions:' ~newln function (newln+ function)* ~newln ~newln
+
+function <- name ~'(' size_t ~'):' (size_t / name) ~{
+  puts "Read function declaration " + _[0]
+  _
+}
+
+components <- ~':components:' newln rule (newln+ rule)* newln
+rule <- name definition                      ~{
+  puts("Read rule " + _[0]);
+  _
+}
+
+name <- @(WORD+)
+
+definition <- size body / body / size
+
+body <- ~':=' rule_expr                      ~{
+  puts("  body: " + _.join(''))
+  _
+}
+
+rule_expr <- rule_body size_multiple?
+rule_body <- rule_cons
+rule_cons <- (rule_opt ":" rule_cons / rule_opt)
+rule_opt <- (rule_statement '|' rule_opt / rule_statement)
+rule_statement <- rule_with_variable_binding / function_with_args / rule_atom
+function_with_args <- name '(' name (',' name)* ')'
+rule_with_variable_binding <- name "\\" rule_atom
+rule_atom <- (lit_byte / name / '(' rule_expr ')')
+
+size <- ~':' size_t                          ~{
+  print("  size '" + _[0] + "'")
+  if (_[1].length > 0)
+     puts(" x " + _[1].join('')) rescue puts(" x " + _[1])
+  else
+     print("\n")
+  end
+  _
+}
+size_t <- ('bit' / 'byte') size_multiple?
+size_multiple <- ~'{' size_expr ~'}'
+size_expr <- size_mult
+size_mult <- size_atom '/' size_mult / size_atom '*' size_mult / size_sum
+size_sum <- size_atom '-' size_sum / size_atom '+' size_sum / size_atom
+size_atom <- size_const / size_unknown / size_label / '(' size_expr ')'
+size_unknown <- '_'
+size_const <- @(DIGIT+)
+size_label <- name                            { |a| a + ".size" }
+
+ext <- ~':ext:' ~newln exts ~newln ~newln    ~{
+  puts("Expected extensions: " + _.join(', '))
+  _
+}
+exts <- ~'[' ext_str (~',' ext_str)* ~']'
+ext_str <- @('"' '.' ALNUM* '"')
+
+lit_byte <- @('0x' XDIGIT XDIGIT)
+newln <- "\n"
+
