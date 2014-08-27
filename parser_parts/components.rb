@@ -3,7 +3,6 @@ class Components
 
   @rules_by_name
 
-  # TODO: figure out how to splat `rest` at the call site in poggler.rtlr. I want to have to do *rest.
   def initialize(first, rest)
     @rules_by_name = {}
     rest.unshift first
@@ -19,10 +18,6 @@ class Components
     end
 
     link_dependencies
-
-    if @start.resolved
-      puts "TODO: Doing parse!"
-    end
   end
 
   def link_dependencies
@@ -38,6 +33,9 @@ class Components
   end
 
   def match(bytes)
+    if not @start
+      raise "Start rule (#{@@start_name}) must be defined"
+    end
     yes = @start.match(bytes)
     puts "Yes? #{yes}"
   end

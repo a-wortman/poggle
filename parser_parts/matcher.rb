@@ -24,6 +24,11 @@ class Matcher
     @pointer = @marks.shift
   end
 
+  def reset
+    revert
+    mark
+  end
+
   def to_s
     "Matcher for #{@bytes.length} bytes, pointer at #{@pointer}. #{@marks.count} marks counted."
   end
