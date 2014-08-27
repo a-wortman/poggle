@@ -12,6 +12,10 @@ class Rule
     @body.requirements
   end
 
+  def resolve(rules)
+    @body.resolve(rules)
+  end
+
   def name
     @name
   end

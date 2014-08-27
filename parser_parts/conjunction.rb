@@ -12,6 +12,11 @@ class Conjunction
     @a.requirements + @b.requirements
   end
 
+  def resolve(arg)
+    @a.resolve(arg)
+    @b.resolve(arg)
+  end
+
   def to_s
     "(#{@a} followed by #{@b})"
   end

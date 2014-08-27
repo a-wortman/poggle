@@ -12,6 +12,10 @@ class Repeat
     @rule.requirements
   end
 
+  def resolve(arg)
+    @rule.resolve(arg)
+  end
+
   def to_s
     "(#{@count} instance of #{@rule})"
   end
