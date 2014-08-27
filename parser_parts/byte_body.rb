@@ -18,6 +18,14 @@ class ByteBody
     val_str.to_i(base)
   end
 
+  def requirements
+    []
+  end
+
+  def resolved
+    true
+  end
+
   def base_for(byte)
     if byte.start_with?("0x")
       16
