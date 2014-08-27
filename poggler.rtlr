@@ -3,6 +3,8 @@ require_relative './parser_parts/rule_reference'
 require_relative './parser_parts/byte_body'
 require_relative './parser_parts/components'
 require_relative './parser_parts/rule_body'
+require_relative './parser_parts/disjunction'
+require_relative './parser_parts/conjunction'
 require_relative './parser_parts/rule'
 
 parser PogglerParser < Rattler::Runtime::PackratParser
@@ -37,12 +39,16 @@ body <- ~':=' rule_expr                      ~{
 
 rule_expr <- rule_body size_multiple?
 rule_body <- rule_cons
-rule_cons <- (rule_opt ":" rule_cons / rule_opt)
-rule_opt <- (rule_statement '|' rule_opt / rule_statement)
+rule_cons <-
+  rule_opt ~":" rule_cons  { Conjunction.new _[0], _[1] } /
+  rule_opt
+rule_opt <-
+  rule_statement ~'|' rule_opt  { Disjunction.new _[0], _[1] } /
+  rule_statement
 rule_statement <- rule_with_variable_binding / function_with_args / rule_atom
 function_with_args <- name '(' name (',' name)* ')'
 rule_with_variable_binding <- name "\\" rule_atom
-rule_atom <- 
+rule_atom <-
   lit_byte  { ByteBody.new _ } /
   name      { RuleReference.new _ } /
   ~'(' rule_expr ~')'
