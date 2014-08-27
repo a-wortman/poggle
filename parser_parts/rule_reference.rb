@@ -26,7 +26,15 @@ class RuleReference
     @rule != nil && @rule.resolved
   end
 
+  def match(bytes)
+    @rule.match(bytes)
+  end
+
   def to_s
-    "(Reference to rule #{@name})"
+    if not @rule
+      "(Unresolved reference to rule #{@name})"
+    else
+      "(Ref: (#{@rule})"
+    end
   end
 end

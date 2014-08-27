@@ -21,4 +21,15 @@ class RuleBody
   def resolve(arg)
     @body.resolve(arg)
   end
+
+  def match(bytes)
+    puts bytes
+    puts "Matching..."
+    @body.match(bytes.mark)
+  end
+
+  def to_s
+    size = @size || "Unbounded"
+    "#{@body.to_s} with size #{size}"
+  end
 end
