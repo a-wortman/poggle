@@ -38,13 +38,7 @@ body <- ~':=' rule_expr                      ~{
   _
 }
 
-rule_expr <- rule_body size_multiple?  {
-  if _[1] != []
-    Repeat.new _[1], _[0]
-  else
-    _[0]
-  end
-}
+rule_expr <- rule_body
 rule_body <- rule_cons
 rule_cons <-
   rule_opt ~":" rule_cons  { Conjunction.new _[0], _[1] } /
@@ -52,7 +46,16 @@ rule_cons <-
 rule_opt <-
   rule_statement ~'|' rule_opt  { Disjunction.new _[0], _[1] } /
   rule_statement
-rule_statement <- rule_with_variable_binding / function_with_args / rule_atom
+rule_statement <-
+  rule_with_variable_binding /
+  function_with_args /
+  rule_atom size_multiple?  {
+    if _[1] != []
+      Repeat.new _[1], _[0]
+    else
+      _[0]
+    end
+  }
 function_with_args <- name '(' name (',' name)* ')'
 rule_with_variable_binding <- name "\\" rule_atom
 rule_atom <-

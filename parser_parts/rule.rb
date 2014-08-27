@@ -4,6 +4,14 @@ class Rule
     @body = body
   end
 
+  def resolved
+    @body.resolved
+  end
+
+  def requirements
+    @body.requirements
+  end
+
   def name
     @name
   end

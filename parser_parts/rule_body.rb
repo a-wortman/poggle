@@ -9,4 +9,12 @@ class RuleBody
       puts "Must infer a size for #{body}"
     end
   end
+
+  def resolved
+    @body.resolved
+  end
+
+  def requirements
+    @body.requirements
+  end
 end

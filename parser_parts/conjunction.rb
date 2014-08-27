@@ -4,6 +4,14 @@ class Conjunction
     @b = b
   end
 
+  def resolved
+    @a.resolved && @b.resolved
+  end
+
+  def requirements
+    @a.requirements + @b.requirements
+  end
+
   def to_s
     "(#{@a} followed by #{@b})"
   end

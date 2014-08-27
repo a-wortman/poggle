@@ -12,7 +12,10 @@ class Components
       raise "A start rule (named #{@@start_name}) must be defined"
     end
 
-    link_dependencies
+    if not @start.resolved
+      puts "Unresolved dependencies: #{@start.requirements}"
+      link_dependencies
+    end
   end
 
   def link_dependencies
