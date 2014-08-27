@@ -10,5 +10,4 @@ contents = file.read
 foo = PogglerParser.parse!(contents)
 
 data = File.open("file", "r").read
-puts data.bytes[2].to_s(16)
 foo.match(Matcher.new data)

@@ -23,8 +23,6 @@ class RuleBody
   end
 
   def match(bytes)
-    puts bytes
-    puts "Matching..."
     @body.match(bytes.mark)
   end
 

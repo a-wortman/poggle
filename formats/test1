@@ -3,7 +3,7 @@
 
 :components:
 Header: byte := 0x44
-Header2: byte := 0x55
+Header2: byte := 0x45
 
 File := Header:Header2
-root := File
+root := (File:eof)|(File:0x10:eof)
