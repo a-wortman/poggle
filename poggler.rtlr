@@ -7,6 +7,7 @@ require_relative './parser_parts/disjunction'
 require_relative './parser_parts/conjunction'
 require_relative './parser_parts/repeat'
 require_relative './parser_parts/rule'
+require_relative './parser_parts/eof'
 
 parser PogglerParser < Rattler::Runtime::PackratParser
 
@@ -59,6 +60,7 @@ rule_statement <-
 function_with_args <- name '(' name (',' name)* ')'
 rule_with_variable_binding <- name "\\" rule_atom
 rule_atom <-
+  'eof'     { Eof.new } /
   lit_byte  { ByteBody.new _ } /
   name      { RuleReference.new _ } /
   ~'(' rule_expr ~')'
