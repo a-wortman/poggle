@@ -1,9 +1,9 @@
 #! /usr/bin/env ruby
 
-require './poggler'
+require './poggler_parser'
 
 metagrammar = ARGV[0] || "formats/test1"
 
 file = File.open(metagrammar, "r")
 contents = file.read
-Poggler.parse!(contents)
+PogglerParser.parse!(contents)

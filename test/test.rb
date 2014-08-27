@@ -14,9 +14,10 @@ puts "Expecting the following to be bad:", expect_bad
 
 def test_good(filenames)
   filenames.each { |name|
-    puts "Testing #{name}"
+    puts "Testing #{name}..."
     contents = File.open(name, "r").read
     PogglerParser.parse!(contents)
+    puts "  [x] Passed"
   }
 end
 
