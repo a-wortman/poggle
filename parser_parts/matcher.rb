@@ -11,6 +11,10 @@ class Matcher
     ret
   end
 
+  def eof
+    @pointer == @bytes.size
+  end
+
   def mark
     @marks.unshift @pointer
     self
