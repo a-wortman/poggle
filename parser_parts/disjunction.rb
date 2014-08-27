@@ -12,6 +12,11 @@ class Disjunction
     @a.requirements + @b.requirements
   end
 
+  def resolve(arg)
+    @a.resolve(arg)
+    @b.resolve(arg)
+  end
+
   def to_s
     "(#{@a}, falling back to #{@b})"
   end

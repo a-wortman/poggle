@@ -17,4 +17,8 @@ class RuleBody
   def requirements
     @body.requirements
   end
+
+  def resolve(arg)
+    @body.resolve(arg)
+  end
 end
