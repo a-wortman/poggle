@@ -57,8 +57,14 @@ rule_statement <-
       _[0]
     end
   }
-function_with_args <- name '(' name (',' name)* ')'
-rule_with_variable_binding <- name "\\" rule_atom
+function_with_args <- name '(' name (',' name)* ')' ~{
+  puts "Function call of " + _[0] + " with " + _[1] + " and others?"
+  _
+}
+rule_with_variable_binding <- name "\\" rule_atom   ~{
+  puts "Rule binding: " + _[0] + " is result of " + _[1]
+  _
+}
 rule_atom <-
   'eof'     { Eof.new } /
   lit_byte  { ByteBody.new _ } /
