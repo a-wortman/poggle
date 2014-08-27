@@ -5,6 +5,7 @@ require_relative './parser_parts/components'
 require_relative './parser_parts/rule_body'
 require_relative './parser_parts/disjunction'
 require_relative './parser_parts/conjunction'
+require_relative './parser_parts/repeat'
 require_relative './parser_parts/rule'
 
 parser PogglerParser < Rattler::Runtime::PackratParser
@@ -33,11 +34,17 @@ definition <-
   size { RuleBody.new _, nil }
 
 body <- ~':=' rule_expr                      ~{
-  puts("  body: " + _.join(''))
+  puts("  body: " + _.to_s)
   _
 }
 
-rule_expr <- rule_body size_multiple?
+rule_expr <- rule_body size_multiple?  {
+  if _[1] != []
+    Repeat.new _[1], _[0]
+  else
+    _[0]
+  end
+}
 rule_body <- rule_cons
 rule_cons <-
   rule_opt ~":" rule_cons  { Conjunction.new _[0], _[1] } /
