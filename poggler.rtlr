@@ -1,25 +1,32 @@
-grammar Poggler
+require 'rattler'
+require_relative './parser_parts/components'
+require_relative './parser_parts/rule_body'
+require_relative './parser_parts/rule'
+
+parser PogglerParser < Rattler::Runtime::PackratParser
 
 %whitespace BLANK*
 
-start   <- ext? functions? components  { _ }
+start   <- ext? functions? components  { Components.new _.last[0], _.last[1] }
 
-functions <- ~':functions:' ~newln function (newln+ function)* ~newln ~newln
+functions <- ~':functions:' ~newln function (~newln+ function)* ~newln ~newln
 
 function <- name ~'(' size_t ~'):' (size_t / name) ~{
   puts "Read function declaration " + _[0]
   _
 }
 
-components <- ~':components:' newln rule (newln+ rule)* newln
-rule <- name definition                      ~{
-  puts("Read rule " + _[0]);
-  _
+components <- ~':components:' ~newln rule (~newln+ rule)* ~newln
+rule <- name definition                       {
+  Rule.new _[0], _[1]
 }
 
 name <- @(WORD+)
 
-definition <- size body / body / size
+definition <-
+  size body { RuleBody.new _[0], _[1] } /
+  body { RuleBody.new nil, _ } /
+  size { RuleBody.new _, nil }
 
 body <- ~':=' rule_expr                      ~{
   puts("  body: " + _.join(''))
