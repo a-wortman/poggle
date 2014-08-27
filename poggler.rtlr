@@ -1,4 +1,6 @@
 require 'rattler'
+require_relative './parser_parts/rule_reference'
+require_relative './parser_parts/byte_body'
 require_relative './parser_parts/components'
 require_relative './parser_parts/rule_body'
 require_relative './parser_parts/rule'
@@ -40,7 +42,10 @@ rule_opt <- (rule_statement '|' rule_opt / rule_statement)
 rule_statement <- rule_with_variable_binding / function_with_args / rule_atom
 function_with_args <- name '(' name (',' name)* ')'
 rule_with_variable_binding <- name "\\" rule_atom
-rule_atom <- (lit_byte / name / '(' rule_expr ')')
+rule_atom <- 
+  lit_byte  { ByteBody.new _ } /
+  name      { RuleReference.new _ } /
+  ~'(' rule_expr ~')'
 
 size <- ~':' size_t                          ~{
   print("  size '" + _[0] + "'")
