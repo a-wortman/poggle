@@ -37,8 +37,13 @@ class Components
     end
   end
 
+  def match(bytes)
+    yes = @start.match(bytes)
+    puts "Yes? #{yes}"
+  end
+
   def to_s
-    "foo"
+    @start.to_s
   end
 end
 

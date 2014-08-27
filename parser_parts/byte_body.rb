@@ -29,6 +29,10 @@ class ByteBody
   def resolve(arg)
   end
 
+  def match(bytes)
+    bytes.next == @byte
+  end
+
   def base_for(byte)
     if byte.start_with?("0x")
       16
