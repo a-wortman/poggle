@@ -11,6 +11,12 @@ class Components
     if not @start
       raise "A start rule (named #{@@start_name}) must be defined"
     end
+
+    link_dependencies
+  end
+
+  def link_dependencies
+    puts "TODO: link rule dependencies"
   end
 
   def to_s
