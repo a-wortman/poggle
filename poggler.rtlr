@@ -2,8 +2,8 @@ require 'rattler'
 require_relative './parser_parts/unbounded_size'
 require_relative './parser_parts/const_size'
 require_relative './parser_parts/reference_size'
-require_relative './parser_parts/any_bits'
-require_relative './parser_parts/any_bytes'
+require_relative './parser_parts/bits'
+require_relative './parser_parts/bytes'
 require_relative './parser_parts/rule_reference'
 require_relative './parser_parts/byte_body'
 require_relative './parser_parts/components'
@@ -87,10 +87,10 @@ size <- ~':' size_t                          ~{
 }
 size_t <-
   ~'bit' size_multiple? {
-    AnyBits.new _[0]
+    Bits.new _[0]
   } /
   ~'byte' size_multiple? {
-    AnyBytes.new _[0]
+    Bytes.new _[0]
   }
 size_multiple <- ~'{' size_expr ~'}' {
   Size.new _

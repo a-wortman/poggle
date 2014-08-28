@@ -4,6 +4,10 @@ class Rule
     @body = body
   end
 
+  def duplicate
+    Rule.new @name, @body.duplicate
+  end
+
   def resolved
     @body.resolved
   end

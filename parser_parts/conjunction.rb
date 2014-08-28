@@ -4,6 +4,10 @@ class Conjunction
     @b = b
   end
 
+  def duplicate
+    Conjunction.new @a.duplicate, @b.duplicate
+  end
+
   def resolved
     @a.resolved && @b.resolved
   end
@@ -27,7 +31,7 @@ class Conjunction
       b_match
     else
       bytes.revert
-      a_match
+      false
     end
   end
 
