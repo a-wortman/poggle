@@ -5,6 +5,10 @@ class ByteBody
     @byte = value_for(byte, @base)
   end
 
+  def duplicate
+    ByteBody.new val_s
+  end
+
   def value_for(byte, base)
     val_str =
       if @base == 10
@@ -41,6 +45,21 @@ class ByteBody
     else
       10
     end
+  end
+
+  def val_s
+    prefix =
+      if @base == 16
+        "0x"
+      elsif @base == 2
+        "b"
+      else
+        ""
+      end
+
+    value = @byte.to_s(@base)
+
+    "#{prefix}#{value}"
   end
 
   def to_s

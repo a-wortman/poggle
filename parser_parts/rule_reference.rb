@@ -3,8 +3,13 @@ class RuleReference
     @name = name
   end
 
+  def duplicate
+    RuleReference.new @name
+  end
+
   def resolve(rules)
-    @rule = rules[@name]
+    @rule = rules[@name].duplicate
+    puts "#{@name} reference resolved with duplicate"
     if not @rule
       puts "Improperly resolved! No rule #{@name}"
     elsif not resolved
