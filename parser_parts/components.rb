@@ -1,5 +1,10 @@
 class Components
   @@start_name = "root"
+  @@vars = {}
+
+  def self.vars
+    @@vars
+  end
 
   @rules_by_name
 

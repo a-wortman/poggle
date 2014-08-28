@@ -1,4 +1,9 @@
 require 'rattler'
+require_relative './parser_parts/unbounded_size'
+require_relative './parser_parts/const_size'
+require_relative './parser_parts/reference_size'
+require_relative './parser_parts/any_bits'
+require_relative './parser_parts/any_bytes'
 require_relative './parser_parts/rule_reference'
 require_relative './parser_parts/byte_body'
 require_relative './parser_parts/components'
@@ -7,7 +12,12 @@ require_relative './parser_parts/disjunction'
 require_relative './parser_parts/conjunction'
 require_relative './parser_parts/repeat'
 require_relative './parser_parts/rule'
+require_relative './parser_parts/size'
 require_relative './parser_parts/eof'
+require_relative './parser_parts/sum'
+require_relative './parser_parts/sub'
+require_relative './parser_parts/div'
+require_relative './parser_parts/mul'
 
 parser PogglerParser < Rattler::Runtime::PackratParser
 
@@ -52,7 +62,7 @@ rule_statement <-
   function_with_args /
   rule_atom size_multiple?  {
     if _[1] != []
-      Repeat.new _[1], _[0]
+      Repeat.new _[1][0], _[0]
     else
       _[0]
     end
@@ -72,23 +82,38 @@ rule_atom <-
   ~'(' rule_expr ~')'
 
 size <- ~':' size_t                          ~{
-  print("  size '" + _[0] + "'")
-  if (_[1].length > 0)
-     puts(" x " + _[1].join('')) rescue puts(" x " + _[1])
-  else
-     print("\n")
-  end
+  puts _
   _
 }
-size_t <- ('bit' / 'byte') size_multiple?
-size_multiple <- ~'{' size_expr ~'}'
+size_t <-
+  ~'bit' size_multiple? {
+    AnyBits.new _[0]
+  } /
+  ~'byte' size_multiple? {
+    AnyBytes.new _[0]
+  }
+size_multiple <- ~'{' size_expr ~'}' {
+  Size.new _
+}
 size_expr <- size_mult
-size_mult <- size_atom '/' size_mult / size_atom '*' size_mult / size_sum
-size_sum <- size_atom '-' size_sum / size_atom '+' size_sum / size_atom
-size_atom <- size_const / size_unknown / size_label / '(' size_expr ')'
-size_unknown <- '_'
-size_const <- @(DIGIT+)
-size_label <- name                            { |a| a + ".size" }
+size_mult <-
+  size_atom ~'/' size_mult { Div.new _[0], _[1] } /
+  size_atom ~'*' size_mult { Mul.new _[0], _[1] } /
+  size_sum
+size_sum <-
+  size_atom ~'-' size_sum { Sub.new _[0], _[1] } /
+  size_atom ~'+' size_sum { Sum.new _[0], _[1] } /
+  size_atom
+size_atom <- size_const / size_unknown / size_label / ~'(' size_expr ~')'
+size_unknown <- '_' {
+  UnboundedSize.new _
+}
+size_const <- @(DIGIT+) {
+  ConstSize.new _
+}
+size_label <- name { 
+  ReferenceSize.new _, Components.vars
+}
 
 ext <- ~':ext:' ~newln exts ~newln ~newln    ~{
   puts("Expected extensions: " + _.join(', '))

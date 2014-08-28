@@ -1,0 +1,2 @@
+class UnboundedSize
+end
