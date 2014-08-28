@@ -3,6 +3,10 @@ class Size
     @rule = size_rule
   end
 
+  def value
+    @rule.value
+  end
+
   def to_s
     @rule.to_s
   end
