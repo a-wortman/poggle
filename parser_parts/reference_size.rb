@@ -5,6 +5,9 @@ class ReferenceSize
   end
 
   def value
+    if not @context[@name]
+      raise "Variable #{@name} is undefined"
+    end
     @context[@name]
   end
 
