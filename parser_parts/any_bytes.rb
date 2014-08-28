@@ -1,21 +1,20 @@
 class AnyBytes
   def initialize(size)
-    @data = []
     if size
       @size = size.value
     else
-      @size = 1
+      @size = ConstSize.new 1
     end
-    puts "Expecing #{@size} bytes"
+    puts "Expecing #{@size.value} bytes"
   end
 
   def duplicate
-    AnyBytes.new ConstSize.new @size
+    AnyBytes.new @size
   end
 
   def match(bytes)
-    puts @size
-    for i in 0..@size-1
+    @data = []
+    for i in 0..@size.value-1
       if bytes.eof
         return false
       else
@@ -24,6 +23,10 @@ class AnyBytes
       puts "Matched bytes #{@data}"
     end
     true
+  end
+
+  def matched
+    @data
   end
 
   def clone
