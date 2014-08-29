@@ -40,6 +40,10 @@ class RuleBody
     @body.match(bytes.mark)
   end
 
+  def matched
+    @body.matched
+  end
+
   def to_s
     size = @size || "Unbounded"
     "#{@body.to_s} with size #{size}"

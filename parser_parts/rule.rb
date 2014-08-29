@@ -28,6 +28,10 @@ class Rule
     @body.match(bytes)
   end
 
+  def matched
+    @body.matched
+  end
+
   def to_s
     "#{@name}: #{@body}"
   end
