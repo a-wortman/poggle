@@ -5,7 +5,6 @@ class AnyBytes
     else
       @size = ConstSize.new 1
     end
-    puts "Expecing #{@size.value} bytes"
   end
 
   def duplicate
@@ -20,7 +19,6 @@ class AnyBytes
       else
         @data.unshift bytes.next
       end
-      puts "Matched bytes #{@data}"
     end
     true
   end

@@ -17,4 +17,8 @@ class Bytes
   def value
     @size.value
   end
+
+  def to_s
+    "#{@size} #{@@unit}"
+  end
 end

@@ -6,7 +6,6 @@ class VariableBinding
   end
 
   def value
-    puts "Value: #{@body.matched}"
     @body.matched
   end
 
@@ -24,5 +23,9 @@ class VariableBinding
 
   def requirements
     @body.requirements
+  end
+
+  def to_s
+    "([#{@name}], binding of #{@body})"
   end
 end
