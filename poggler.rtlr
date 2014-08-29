@@ -34,9 +34,7 @@ function <- name ~'(' size_t ~'):' (size_t / name) ~{
 }
 
 components <- ~':components:' ~newln rule (~newln+ rule)* ~newln
-rule <- name definition                       {
-  Rule.new _[0], _[1]
-}
+rule <- name definition { Rule.new _[0], _[1] }
 
 name <- @(WORD+)
 
@@ -45,10 +43,7 @@ definition <-
   body { RuleBody.new nil, _ } /
   size { RuleBody.new _, nil }
 
-body <- ~':=' rule_expr                      ~{
-  puts("  body: " + _.to_s)
-  _
-}
+body <- ~':=' rule_expr
 
 rule_expr <- rule_body
 rule_body <- rule_cons
@@ -72,30 +67,18 @@ function_with_args <- name '(' name (',' name)* ')' ~{
   puts "Function call of " + _[0] + " with " + _[1] + " and others?"
   _
 }
-rule_with_variable_binding <- name ~"\\" rule_atom   {
-  puts "Rule binding: " + _[0] + " is result of " + _[1].to_s
-  VariableBinding.new _[0], _[1]
-}
+rule_with_variable_binding <- name ~"\\" rule_atom { VariableBinding.new _[0], _[1] }
 rule_atom <-
   'eof'     { Eof.new } /
   lit_byte  { ByteBody.new _ } /
   name      { RuleReference.new _ } /
   ~'(' rule_expr ~')'
 
-size <- ~':' size_t                          ~{
-  puts _
-  _
-}
+size <- ~':' size_t
 size_t <-
-  ~'bit' size_multiple? {
-    Bits.new _[0]
-  } /
-  ~'byte' size_multiple? {
-    Bytes.new _[0]
-  }
-size_multiple <- ~'{' size_expr ~'}' {
-  Size.new _
-}
+  ~'bit' size_multiple? { Bits.new _[0] } /
+  ~'byte' size_multiple? { Bytes.new _[0] }
+size_multiple <- ~'{' size_expr ~'}' { Size.new _ }
 size_expr <- size_mult
 size_mult <-
   size_atom ~'/' size_mult { Div.new _[0], _[1] } /
@@ -106,15 +89,9 @@ size_sum <-
   size_atom ~'+' size_sum { Sum.new _[0], _[1] } /
   size_atom
 size_atom <- size_const / size_unknown / size_label / ~'(' size_expr ~')'
-size_unknown <- '_' {
-  UnboundedSize.new _
-}
-size_const <- @(DIGIT+) {
-  ConstSize.new _
-}
-size_label <- name { 
-  ReferenceSize.new _, Components.vars
-}
+size_unknown <- '_' { UnboundedSize.new _ }
+size_const <- @(DIGIT+) { ConstSize.new _ }
+size_label <- name { ReferenceSize.new _, Components.vars }
 
 ext <- ~':ext:' ~newln exts ~newln ~newln    ~{
   puts("Expected extensions: " + _.join(', '))
