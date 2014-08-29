@@ -18,11 +18,14 @@ class Repeat
   end
 
   def match(bytes)
-    puts "Matching #{@count.value}"
     for i in 1..@count.value
-      puts "Matching repetition #{i}"
-      @rule.match(bytes.mark)
+      repetition = @rule.match(bytes)
+      if not repetition
+        bytes.revert
+        return false
+      end
     end
+    true
   end
 
   def to_s

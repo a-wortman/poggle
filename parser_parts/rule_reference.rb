@@ -9,7 +9,6 @@ class RuleReference
 
   def resolve(rules)
     @rule = rules[@name].duplicate
-    puts "#{@name} reference resolved with duplicate"
     if not @rule
       puts "Improperly resolved! No rule #{@name}"
     elsif not resolved
