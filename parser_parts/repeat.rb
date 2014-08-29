@@ -18,6 +18,7 @@ class Repeat
   end
 
   def match(bytes)
+    puts "Matching #{@count.value}"
     for i in 1..@count.value
       puts "Matching repetition #{i}"
       @rule.match(bytes.mark)

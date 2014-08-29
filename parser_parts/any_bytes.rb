@@ -1,7 +1,7 @@
 class AnyBytes
   def initialize(size)
     if size
-      @size = size.value
+      @size = size
     else
       @size = ConstSize.new 1
     end

@@ -31,6 +31,10 @@ class RuleReference
     @rule != nil && @rule.resolved
   end
 
+  def matched
+    @rule.matched
+  end
+
   def match(bytes)
     @rule.match(bytes)
   end
