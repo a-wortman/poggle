@@ -25,6 +25,10 @@ class VariableBinding
     @body.requirements
   end
 
+  def duplicate
+    VariableBinding.new @name, @body
+  end
+
   def to_s
     "([#{@name}], binding of #{@body})"
   end
