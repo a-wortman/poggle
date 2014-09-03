@@ -28,6 +28,10 @@ class Repeat
     true
   end
 
+  def duplicate
+    Repeat.new @count, @rule.duplicate
+  end
+
   def to_s
     "(#{@count} instance of #{@rule})"
   end
