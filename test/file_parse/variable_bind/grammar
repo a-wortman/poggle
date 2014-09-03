@@ -1,0 +1,6 @@
+:components:
+Length: byte
+Data := len\Length:byte{len}
+
+root := Data:eof
+
