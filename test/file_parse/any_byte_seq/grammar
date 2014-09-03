@@ -1,0 +1,4 @@
+:components:
+Bytes: byte
+
+root := Bytes{3}:eof

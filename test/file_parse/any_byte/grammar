@@ -1,0 +1,5 @@
+:components:
+AByte: byte
+
+root := AByte:eof
+
