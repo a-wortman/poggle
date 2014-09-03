@@ -6,7 +6,6 @@ class VariableBinding
       raise "Variables cannot be bound more than once in the same scope! Offending variable is named \"#{@name}\""
     end
 
-    puts "Binding #{@name}"
     Components.vars[@name] = self
   end
 
