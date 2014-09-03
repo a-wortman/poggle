@@ -8,7 +8,12 @@ class RuleReference
   end
 
   def resolve(rules)
-    @rule = rules[@name].duplicate
+    origRule = rules[@name]
+    if not origRule
+      raise "Undefined rule \"#{@name}\""
+    end
+
+    @rule = origRule.duplicate
     if not @rule
       puts "Improperly resolved! No rule #{@name}"
     elsif not resolved
