@@ -165,3 +165,13 @@ Size notations are already extremely similar to repetition notation (they ARE ve
 By doing that, `bit` could be the set of things one bit can be (`{0, 1}`) where `byte` can be all values for a single byte (`{0x00-0xFF}`)
 If they were sets rather than just units, that allows for set theory types of operations like intersection, union, and negation, the first and last of which being what `&` and `!` are trying to express.
 Perhaps it could be expanded to comprehensions as well, such as `any x such that x matches <expression> and is not in <set>`.
+
+Also, allowing comments in Poggle grammars.
+
+and handling endian-ness
+
+and alignment
+
+and being able to require other grammars
+
+and declaring a range in which something lies (foo := 0x01-0x04)

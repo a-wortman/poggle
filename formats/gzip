@@ -1,3 +1,5 @@
+# Should mostly work
+
 :ext:
 [".gz", ".gzip"]
 
@@ -9,8 +11,7 @@ deflate_data
 
 :functions:
 crc32(byte*): byte{4}
-crc16(byte*): byte{2} ->
-  crc32(byte*) -> (a:b:_) -> a:b
+crc16(byte*): byte{2}
 
 :primitives:
 byte
