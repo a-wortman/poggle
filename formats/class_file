@@ -1,0 +1,71 @@
+:ext:
+[".class"]
+
+:components:
+u2: byte{2}
+
+magic := 0xCA:0xFE:0xBA:0xBE
+
+minor_version := u2
+major_version := u2
+version := minor_version:major_version
+
+ACC_PUBLIC: bit
+ACC_FINAL: bit
+ACC_SUPER: bit
+ACC_INTERFACE: bit
+ACC_ABSTRACT: bit
+ACC_SYNTHETIC: bit
+ACC_ANNOTATION: bit
+ACC_ENUM: bit
+dc: bit := 0
+
+access_flags :=
+    dc:dc:dc:dc : dc:ACC_ENUM:ACC_ANNOTATION:ACC_SYNTHETIC
+  : dc:dc:dc:dc : dc:ACC_ABSTRACT:ACC_INTERFACE:dc
+  : dc:dc:dc:dc : dc:dc:ACC_SUPER:ACC_FINAL
+  : dc:dc:dc:dc : dc:dc:dc:ACC_PUBLIC
+
+
+
+this_class := u2
+super_class := u2
+
+member_count := u2
+
+constant_pool_count: member_count
+cp_info :=
+    count\constant_pool_count
+  : constant_pool_entry{count}
+
+interfaces_count: member_count
+interface_info :=
+    count\interfaces_count
+  : interfaces_entry{count}
+
+fields_count: member_count
+field_info :=
+    count\fields_count
+  : fields_entry{count}
+
+methods_count: member_count
+method_info :=
+    count\methods_count
+  : methods_entry{count}
+
+attributes_count: member_count
+attribute_info :=
+    count\attributes_count
+  : attributes_entry{count}
+
+root :=
+    magic
+  : version
+  : constant_pool
+  : access_flags
+  : this_class
+  : super_class
+  : interfaces
+  : fields
+  : methods
+  : attributes
