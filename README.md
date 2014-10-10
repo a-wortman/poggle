@@ -49,7 +49,7 @@ Record := Email:Name:Address
 is a perfectly fine set of rules.
 
 ## Size annotations
-Sizes are notated as either `bit` or `byte`, and optionally followed by `{<expression>}`
+Sizes (just like how they're used above) are notated as either `bit` or `byte`, and optionally followed by `{<expression>}`
 
 These declare the size of the rule they annotate: for any `<unit>{<expression>}`, that rule matches exactly `<expression>` many `<unit>`s
 
@@ -59,6 +59,7 @@ Grammatical rules, especially Poggle's rules, are only useful if they can actual
 Sizes are somewhat intelligently inferred: sizes are taken to be the smallest unit size that can contain the literal.
 
 | Expression | Type           | Unit size (bits) |
+| ---------- | -------------- | ---------------- |
 | 0x1        | Hex value      | 8                |
 | b1         | Bit string     | 1                |
 | 1          | Integer        | 8                |
@@ -72,16 +73,18 @@ Examples:
 ```
 <name> := <literal>
 
-One := 0x01
-ByteOne := b00000001
-BitOne := b1
-IntOne := 1
-CharOne := '1'
-StringOne := "1"
-UnicodeString := u"<fill in with emoji>"
+One: byte := 0x01
+ByteOne: bit{8} := b00000001
+BitOne: bit{1} := b1
+IntOne: byte := 1
+CharOne: byte := '1'
+StringOne: byte := "1"
+UnicodeString: byte{3} := u"💽"
 ```
 
 Strings are ***not*** null terminated. For C-string style, see [below](conjunction).
+
+\* actual sizes may well not be `characterCount * unitSize`, Unicode may or may not use multiple code points for a single symbol
 
 ## Conjunction
 The easiest way to get started matching against files is to be able to say "A is followed by B". Poggle expresses that relation as `:` between two expressions.
