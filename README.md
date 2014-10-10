@@ -1,4 +1,4 @@
-toggle is a parser generator built to produce parsers for data formats in any supported target language. ~Poggle's parsers can be used on any sequenced collection of bytes as defined by the target language, and produces structures in the target language for consumption if parsing succeeds.~ (Poggle does not yet produce structures in the target language, or even allow targetting a language.)
+Poggle is a parser generator built to produce parsers for data formats in any supported target language. ~Poggle's parsers can be used on any sequenced collection of bytes as defined by the target language, and produces structures in the target language for consumption if parsing succeeds.~ (Poggle does not yet produce structures in the target language, or even allow targetting a language.)
 
 Poggle generates parsers using rules specified in rule files. The grammar describing poggle rules is given in [poggle.rtlr](poggle.rtlr), a grammar for [Rattler](https://github.com/jarhart/rattler).
 
