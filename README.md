@@ -1,14 +1,14 @@
-Poggle is a parser generator built to produce parsers for data formats in any supported target language. ~~Poggle's parsers can be used on any sequenced collection of bytes as defined by the target language, and produces structures in the target language for consumption if parsing succeeds.~~ (Poggle does not yet produce structures in the target language, or even allow targetting a language.)
+Poggle is a parser generator built to produce parsers for data formats in any supported target language. ~~Poggle's parsers can be used on any sequenced collection of bytes as defined by the target language, and produces structures in the target language for consumption if parsing succeeds.~~ Poggle does not yet produce structures in the target language, or even allow targetting a language.
 
-Poggle generates parsers using rules specified in rule files, with examples for [deflate](formats/deflate_data), [gzip](formats/gzip), and [JVM class files](format/class_file). The grammar describing poggle rules is given in [poggle.rtlr](poggle.rtlr), a grammar for [Rattler](https://github.com/jarhart/rattler).
+Poggle generates parsers using rules specified in rule files, with examples for [deflate](formats/deflate_data), [gzip](formats/gzip), and [JVM class files](formats/class_file). The grammar describing poggle rules is given in [poggle.rtlr](poggle.rtlr), a grammar for [Rattler](https://github.com/jarhart/rattler).
 
-Poggle rule files have ~two~ (at least two, possibly more) sections: function declarations and rule components.
+Poggle rule files have ~~two~~ (at least two, possibly more) sections: function declarations and rule components.
 
-Rules in a Poggle grammar begin immediately after the line
+Rules in a Poggle grammar's rules begin immediately after the line
 ```
 :components:
 ```
-and are explained below. Multiple newlines between rules is totally acceptable!
+and are explained below:
 
 ## The Basics: Poggle rules
 A parser's rules are declared to Poggle by statements in the form
@@ -21,7 +21,7 @@ In the case of
 ```
 <name>: <size> := <body>
 ```
-Poggle looks to ensure that the rule's body matches exactly the amount of space declared by <size>.
+Poggle looks to ensure that the rule's body matches exactly the amount of space declared by `size`.
 
 Example: `File: byte{4} := Header:Body` is read as a rule named `File`, expected to match exactly four bytes, given the structure described by `Header:Body`. (More on that later)
 
@@ -29,17 +29,24 @@ For rules like
 ```
 <name>: <size>
 ```
-Poggle matches to exactly <size> data. This becomes really useful later!
+Poggle matches to exactly `size` data. This becomes really useful later, when you need to get `size` bytes with unknown values.
 
-Example: `Data: byte{8}` is a rule named `Data` that matches any eight bytes in place of the name `Data` anywhere else in the grammar.
+Example: `Data: byte{8}` is a rule named `Data` that matches any eight bytes wherever `Data` is used in the grammar.
 
 Lastly, rules like
 ```
 <name> := <body>
 ```
-are useful for ascribing nice names to structures.
+are useful for ascribing nice names to structures. Poggle is whitespace insensitive, so for example
+```
+emailChar := byte &! '@'
 
-Example: `Record := Email:Name:Address`.
+chars := emailChar{_}
+
+Email := prefix:'@':postfix
+Record := Email:Name:Address
+```
+is a perfectly fine set of rules.
 
 ## Literals
 Grammatical rules, especially Poggle's rules, are only useful if they can actually match against something. For Poggle, that something is bytes, bits, or some other primitive in a data stream. Poggle supports this very directly:
