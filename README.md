@@ -48,8 +48,25 @@ Record := Email:Name:Address
 ```
 is a perfectly fine set of rules.
 
+## Size annotations
+Sizes are notated as either `bit` or `byte`, and optionally followed by `{<expression>}`
+
+These declare the size of the rule they annotate: for any `<unit>{<expression>}`, that rule matches exactly `<expression>` many `<unit>`s
+
 ## Literals
 Grammatical rules, especially Poggle's rules, are only useful if they can actually match against something. For Poggle, that something is bytes, bits, or some other primitive in a data stream. Poggle supports this very directly:
+
+Sizes are somewhat intelligently inferred: sizes are taken to be the smallest unit size that can contain the literal.
+
+| Expression | Type           | Unit size (bits) |
+| 0x1        | Hex value      | 8                |
+| b1         | Bit string     | 1                |
+| 1          | Integer        | 8                |
+| '1'        | Character      | 8                |
+| "1"        | (UTF-8) String | 8                |
+| u"1"       | UTF-8 String   | 8\*              |
+| u16"1"     | UTF-16 String  | 16\*             |
+| u32"1"     | UTF-32 String  | 32               |
 
 Examples:
 ```
@@ -59,35 +76,29 @@ One := 0x01
 ByteOne := b00000001
 BitOne := b1
 IntOne := 1
+CharOne := '1'
 StringOne := "1"
 UnicodeString := u"<fill in with emoji>"
-CStringOne := "1"
 ```
-
-Sizes are inferred to be the smallest size that matches the literal typed... Most of the time. `b00000001` is presumed to be 8 bits == 1 byte, `b1` is one bit.
-
-The integer `1` on the other hand is the size of an `int` in the target language, defaulting to 32 bits. **come back to this... might want to rethink it.**
-
-Strings take exactly the number of bytes they match against under the given encoding, falling back to UTF-8 if nothing is explicitly stated.
 
 Strings are ***not*** null terminated. For C-string style, see [below](conjunction).
 
 ## Conjunction
-The easiest way to get started matching against files is to be able to say "B follows A". Poggle expresses that relation as `:` between two matching bodies.
+The easiest way to get started matching against files is to be able to say "A is followed by B". Poggle expresses that relation as `:` between two expressions.
 
 Example:
 ```
-File := 0x04:Body
-
 MagicNumber := 0xCA:0xFE:0xBA:0xBE
 Data: byte{16}
 File := MagicNumber:Data
 ```
 
-The second example above matches any file starting with the bytes `CA FE BA BE` and any sixteen bytes following. If you can make 20-byte class files, this could be used for them! ;)
+The second example above matches any file starting with the bytes `CA FE BA BE` and any sixteen bytes following.
+
+Also useful is combining a string from above with `:
 
 ## Disjunction
-Sometimes data has a structure that requires saying "B follows A.. or otherwise C follows A". This is stated in Poggle by using `|` between two matching bodies.
+Sometimes data has a structure that requires saying "X is A or B". This is stated in Poggle by using `|` between two expressions.
 
 Example:
 ```
@@ -132,7 +143,7 @@ File4 := s\size:content{s * 2}
 
 ## Function declarations
 Poggle allows rule files to rely on computations in the target language, but requires those functions be declared so it can give an error if the function is unavailable.
-These aren't implemented yet, but should be callable by `<symbol>(values, to, pass, in)` and binding the result.
+These aren't implemented yet, but should be callable by `<symbol>(values, to, pass, in)`, with the ability to match or bind the result like any expression.
 
 Example:
 ```
@@ -145,3 +156,9 @@ element: byte
 x := a\byte{4}:e\bar(a):foo(a, e){2}
 ```
 
+## Other things
+There is usage of things like `&` and `!` above, which I haven't specified here. That's because they don't exist yet, and I'm not sure how to make them exist yet!
+Size notations are already extremely similar to repetition notation (they ARE very similar!). I'm coming to think the base units of "bit" and "byte" aren't quite good enough, and size annotations could be an expression of some `n` many members of a set, where the set is given in place of the `unit`.
+By doing that, `bit` could be the set of things one bit can be (`{0, 1}`) where `byte` can be all values for a single byte (`{0x00-0xFF}`)
+If they were sets rather than just units, that allows for set theory types of operations like intersection, union, and negation, the first and last of which being what `&` and `!` are trying to express.
+Perhaps it could be expanded to comprehensions as well, such as `any x such that x matches <expression> and is not in <set>`.
