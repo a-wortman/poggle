@@ -1,4 +1,4 @@
 :components:
 A: byte
-B: byte{2}
+root: byte{2}
 

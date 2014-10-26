@@ -1,6 +1,6 @@
 #! /usr/bin/env ruby
 
-require '../poggle_parser'
+require '../poggler_parser'
 
 dirs = Dir.glob("**/*")
 dirs.delete("test.rb")

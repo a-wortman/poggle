@@ -4,5 +4,5 @@ foo(byte{_}): buildShort
 
 :components:
 B: byte{_}
-C := b\B:foo(b)
+root := b\B
 
