@@ -4,6 +4,10 @@ class Disjunction
     @b = b
   end
 
+  def duplicate
+    Disjunction.new @a.duplicate, @b.duplicate
+  end
+
   def resolved
     @a.resolved && @b.resolved
   end
