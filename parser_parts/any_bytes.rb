@@ -11,6 +11,10 @@ class AnyBytes
     AnyBytes.new @size
   end
 
+  def requirements
+    []
+  end
+
   def match(bytes)
     @data = []
     for i in 0..@size.value-1

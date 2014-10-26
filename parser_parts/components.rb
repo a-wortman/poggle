@@ -13,6 +13,7 @@ class Components
     rest.unshift first
     @rules = rest
     @start = @rules.find { |rule|
+      puts(rule)
       rule.name == @@start_name #@start_name
     }
     @rules.each { |rule|
