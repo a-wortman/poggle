@@ -48,10 +48,13 @@ body <- ~':=' rule_expr
 rule_expr <- rule_body
 rule_body <- rule_cons
 rule_cons <-
-  rule_opt ~":" rule_cons  { Conjunction.new _[0], _[1] } /
+  rule_disj ~":" rule_cons  { Conjunction.new _[0], _[1] } /
+  rule_disj
+rule_disj <-
+  rule_opt ~'|' rule_disj  { Disjunction.new _[0], _[1] } /
   rule_opt
 rule_opt <-
-  rule_statement ~'|' rule_opt  { Disjunction.new _[0], _[1] } /
+  rule_statement ~'?' /
   rule_statement
 rule_statement <-
   rule_with_variable_binding /
@@ -89,7 +92,7 @@ size_sum <-
   size_atom ~'+' size_sum { Sum.new _[0], _[1] } /
   size_atom
 size_atom <- size_const / size_unknown / size_label / ~'(' size_expr ~')'
-size_unknown <- '_' { UnboundedSize.new _ }
+size_unknown <- '_' { UnboundedSize.new }
 size_const <- @(DIGIT+) { ConstSize.new _ }
 size_label <- name { ReferenceSize.new _, Components.vars }
 
