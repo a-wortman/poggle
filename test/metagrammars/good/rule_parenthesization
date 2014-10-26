@@ -5,3 +5,4 @@ C := 0x24
 D := (A|B):C
 E := (A:B)|C
 
+root := D:E

@@ -1,4 +1,4 @@
 :components:
 B := 0x04
-A := B
+root := B
 
