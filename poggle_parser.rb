@@ -1,8 +1,8 @@
 require 'rattler'
-require_relative './poggler'
+require_relative './poggler_parser'
 
-class PogglerParser < Rattler::Runtime::PackratParser
+class PoggleParser < Rattler::Runtime::PackratParser
 
-  include Poggler
+  include PogglerParser
 
 end
