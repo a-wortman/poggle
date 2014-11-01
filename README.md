@@ -1,5 +1,7 @@
 Poggle is a parser generator built to produce parsers for data formats in any supported target language. ~~Poggle's parsers can be used on any sequenced collection of bytes as defined by the target language, and produces structures in the target language for consumption if parsing succeeds.~~ Poggle does not yet produce structures in the target language, or even allow targetting a language.
 
+Requires ruby 2.1.2 (for Fixnum#bit_length)
+
 Poggle generates parsers using rules specified in rule files, with examples for [deflate](formats/deflate_data), [gzip](formats/gzip), and [JVM class files](formats/class_file). The grammar describing poggle rules is given in [poggle.rtlr](poggle.rtlr), a grammar for [Rattler](https://github.com/jarhart/rattler).
 
 Poggle rule files have ~~two~~ (at least two, possibly more) sections: function declarations and rule components.
