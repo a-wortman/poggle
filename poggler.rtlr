@@ -5,9 +5,13 @@ require_relative './parser_parts/const_size'
 require_relative './parser_parts/reference_size'
 require_relative './parser_parts/bits'
 require_relative './parser_parts/bytes'
+require_relative './parser_parts/prim'
 require_relative './parser_parts/rule_reference'
 require_relative './parser_parts/byte_body'
+require_relative './parser_parts/bit_body'
 require_relative './parser_parts/components'
+require_relative './parser_parts/str_rule'
+require_relative './parser_parts/num_rule'
 require_relative './parser_parts/rule_body'
 require_relative './parser_parts/disjunction'
 require_relative './parser_parts/conjunction'
@@ -74,13 +78,20 @@ rule_with_variable_binding <- name ~"\\" rule_atom { VariableBinding.new _[0], _
 rule_atom <-
   'eof'     { Eof.new } /
   lit_byte  { ByteBody.new _ } /
+  lit_bits  { BitBody.new _ } /
+  lit_num   { NumRule.new _ } /
   name      { RuleReference.new _ } /
+  str       { StrRule.new _ } /
   ~'(' rule_expr ~')'
 
 size <- ~':' size_t
 size_t <-
   ~'bit' size_multiple? { Bits.new _[0] } /
-  ~'byte' size_multiple? { Bytes.new _[0] }
+  ~'byte' size_multiple? { Bytes.new _[0] } /
+  name size_multiple? {
+    puts "Thing named " + _[0]
+    Prim.new _[0], _[1]
+  }
 size_multiple <- ~'{' size_expr ~'}' { Size.new _ }
 size_expr <- size_mult
 size_mult <-
@@ -103,6 +114,22 @@ ext <- ~':ext:' ~newln exts ~newln ~newln    ~{
 exts <- ~'[' ext_str (~',' ext_str)* ~']'
 ext_str <- @('"' '.' ALNUM* '"')
 
+str <- ~'"' @((" " / ALNUM / "!")*) ~'"'
+
+str2 <- ~'"' escaped_char* ~'"' {
+  puts _
+  _
+}
+escaped_char <-
+  '\\\\' /
+  '"' /
+  "'" /
+  "!" /
+  " " /
+  ALNUM
+
 lit_byte <- @('0x' XDIGIT XDIGIT)
+lit_num <- @(DIGIT+) { _.to_i }
+lit_bits <- ~'b' @(("0" / "1")+)
 newln <- "\n"
 
