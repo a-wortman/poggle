@@ -18,6 +18,10 @@ class StrRule
   def resolve(arg)
   end
 
+  def size_of
+    ConstSize.new Bytes.new @matchStr.length
+  end
+
   def match(bytes)
     for i in 0..@matchStr.length - 1
       if bytes.eof

@@ -8,6 +8,10 @@ class Rule
     Rule.new @name, @body.duplicate
   end
 
+  def infer_size
+    @body.infer_size
+  end
+
   def resolved
     @body.resolved
   end
@@ -30,6 +34,10 @@ class Rule
 
   def matched
     @body.matched
+  end
+
+  def size_of
+    @body.size_of
   end
 
   def to_s

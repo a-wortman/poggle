@@ -89,7 +89,6 @@ size_t <-
   ~'bit' size_multiple? { Bits.new _[0] } /
   ~'byte' size_multiple? { Bytes.new _[0] } /
   name size_multiple? {
-    puts "Thing named " + _[0]
     Prim.new _[0], _[1]
   }
 size_multiple <- ~'{' size_expr ~'}' { Size.new _ }
@@ -121,12 +120,8 @@ str2 <- ~'"' escaped_char* ~'"' {
   _
 }
 escaped_char <-
-  '\\\\' /
-  '"' /
-  "'" /
-  "!" /
-  " " /
-  ALNUM
+  GRAPH /
+  SPACE
 
 lit_byte <- @('0x' XDIGIT XDIGIT)
 lit_num <- @(DIGIT+) { _.to_i }

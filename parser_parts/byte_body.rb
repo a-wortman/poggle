@@ -62,6 +62,10 @@ class ByteBody
     "#{prefix}#{value}"
   end
 
+  def size_of
+    ConstSize.new Bytes.new 1
+  end
+
   def to_s
     "Literal value #{@byte.to_s} [specified as #{@byte.to_s(@base)} base #{@base}]"
   end
