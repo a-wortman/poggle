@@ -160,20 +160,3 @@ bar(byte{4}): byte{2}
 element: byte
 x := a\byte{4}:e\bar(a):foo(a, e){2}
 ```
-
-## Other things
-There is usage of things like `&` and `!` above, which I haven't specified here. That's because they don't exist yet, and I'm not sure how to make them exist yet!
-Size notations are already extremely similar to repetition notation (they ARE very similar!). I'm coming to think the base units of "bit" and "byte" aren't quite good enough, and size annotations could be an expression of some `n` many members of a set, where the set is given in place of the `unit`.
-By doing that, `bit` could be the set of things one bit can be (`{0, 1}`) where `byte` can be all values for a single byte (`{0x00-0xFF}`)
-If they were sets rather than just units, that allows for set theory types of operations like intersection, union, and negation, the first and last of which being what `&` and `!` are trying to express.
-Perhaps it could be expanded to comprehensions as well, such as `any x such that x matches <expression> and is not in <set>`.
-
-Also, allowing comments in Poggle grammars.
-
-and handling endian-ness
-
-and alignment
-
-and being able to require other grammars
-
-and declaring a range in which something lies (foo := 0x01-0x04)
