@@ -11,11 +11,30 @@ class Bytes
   end
 
   def initialize(size)
-    @size = size || ConstSize.new(1)
+    @size = size || 1
   end
 
   def value
     @size.value
+  end
+
+  def +(other)
+    case other
+    when Bytes
+      Bytes.new(@size + other.size)
+    when Bits
+      Bits.new(bit_size + other.size)
+    else
+      throw "Unhandlable size #{other}"
+    end
+  end
+
+  def bit_size
+    @size * 8
+  end
+
+  def size
+    @size
   end
 
   def to_s

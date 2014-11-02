@@ -29,6 +29,10 @@ class VariableBinding
     @body.requirements
   end
 
+  def size_of
+    @body.size_of
+  end
+
   def duplicate
     VariableBinding.new @name, @body
   end
