@@ -13,7 +13,6 @@ class Components
     rest.unshift first
     @rules = rest
     @start = @rules.find { |rule|
-      puts(rule)
       rule.name == @@start_name #@start_name
     }
     @rules.each { |rule|
@@ -28,16 +27,36 @@ class Components
     # scoping but that's not done yet.
     @@vars = {}
     link_dependencies
+    infer_sizes
+    check_sizes
+  end
+
+  def unresolved_dependencies
+    @rules.each { |rule|
+      if not rule.resolved
+        return true
+      end
+    }
+    false
+  end
+
+  def infer_sizes
+    @rules.each { |rule| rule.infer_size }
+  end
+
+  def check_sizes
   end
 
   def link_dependencies
-    last_requirements = @start.requirements
-    while not @start.resolved
-      @start.resolve(@rules_by_name)
-      if @start.requirements == last_requirements
-        raise "Cannot resolve rules: #{@start.requirements}"
-      else
-        last_requirements = @start.requirements
+    while unresolved_dependencies
+      stuck = true
+      @rules.each { |rule|
+        last_reqs = rule.requirements
+        rule.resolve(@rules_by_name)
+        stuck &= last_reqs == rule.requirements
+      }
+      if stuck
+        throw "In resolution loop"
       end
     end
   end

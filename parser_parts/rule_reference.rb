@@ -43,6 +43,10 @@ class RuleReference
     @rule.match(bytes)
   end
 
+  def size_of
+    @rule.size_of
+  end
+
   def to_s
     if not @rule
       "(Unresolved reference to rule #{@name})"
