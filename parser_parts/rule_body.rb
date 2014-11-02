@@ -6,7 +6,6 @@ class RuleBody
     @size = size
     @body = body
     if not @body
-      puts "No body present, size of data to match for this rule is #{@size}"
       if @size.unit == Bits.unit
         @body = AnyBits.new @size
       elsif @size.unit == Bytes.unit
@@ -15,8 +14,11 @@ class RuleBody
         raise "Cannot handle unit #{@size.unit}"
       end
     end
+  end
+
+  def infer_size
     if not @size
-      puts "Must infer a size for #{body}"
+      @size = @body.size_of
     end
   end
 
@@ -38,6 +40,10 @@ class RuleBody
 
   def match(bytes)
     @body.match(bytes.mark)
+  end
+
+  def size_of
+    @body.size_of
   end
 
   def matched

@@ -1,13 +1,17 @@
 class ConstSize
-  def initialize(number)
-    @value = number.to_i
+  def initialize(value)
+    @value = value
   end
 
   def value
-    @value.to_i
+    @value
   end
 
   def to_s
     @value.to_s
+  end
+
+  def +(other)
+    ConstSize.new(other.value + @value)
   end
 end

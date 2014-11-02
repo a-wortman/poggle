@@ -27,6 +27,10 @@ class BitBody
     true
   end
 
+  def size_of
+    ConstSize.new Bits.new @body.length
+  end
+
   def to_s
     @body.to_s
   end

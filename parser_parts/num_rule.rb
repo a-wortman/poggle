@@ -45,6 +45,10 @@ class NumRule
   def resolve(arg)
   end
 
+  def size_of
+    ConstSize.new Bytes.new @bytes.length
+  end
+
   def match(bytes)
     for i in 0..@bytes.length
       if @bytes[i] != bytes.next

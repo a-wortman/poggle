@@ -21,6 +21,10 @@ class Disjunction
     @b.resolve(arg)
   end
 
+  def size_of
+    @b.size_of
+  end
+
   def match(bytes)
     a_match = @a.match(bytes)
     if a_match

@@ -35,6 +35,10 @@ class Conjunction
     end
   end
 
+  def size_of
+    @a.size_of + @b.size_of
+  end
+
   def to_s
     "(#{@a} followed by #{@b})"
   end
