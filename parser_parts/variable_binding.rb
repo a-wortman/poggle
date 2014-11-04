@@ -38,6 +38,6 @@ class VariableBinding
   end
 
   def to_s
-    "([#{@name}], binding of #{@body})"
+    "('#{@name}', binding of #{@body})"
   end
 end

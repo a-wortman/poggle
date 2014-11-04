@@ -11,30 +11,39 @@ class Bytes
   end
 
   def initialize(size)
-    @size = size || 1
+    @size = size || (ConstSize.new 1)
   end
 
-  def value
-    @size.value
+  def bytes
+    @size.force
+  end
+
+  def bits
+    @size.force * 8
+  end
+
+  def const
+    @size.const
   end
 
   def +(other)
+    return self unless const
     case other
     when Bytes
-      Bytes.new(@size + other.size)
+      Bytes.new(bytes + other.bytes)
     when Bits
-      Bits.new(bit_size + other.size)
+      Bits.new(bits + other.bits)
     else
       throw "Unhandlable size #{other}"
     end
   end
 
-  def bit_size
-    @size * 8
+  def *(other)
+    Bytes.new(@size * other)
   end
 
   def size
-    @size
+    bytes
   end
 
   def to_s

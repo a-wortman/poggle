@@ -6,10 +6,11 @@ class RuleBody
     @size = size
     @body = body
     if not @body
-      if @size.unit == Bits.unit
-        @body = AnyBits.new @size
-      elsif @size.unit == Bytes.unit
-        @body = AnyBytes.new @size
+      case @size
+      when Bits
+        @body = AnyBits.new @size.bits
+      when Bytes
+        @body = AnyBytes.new @size.bytes
       else
         raise "Cannot handle unit #{@size.unit}"
       end
