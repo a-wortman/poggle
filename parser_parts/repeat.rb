@@ -1,3 +1,5 @@
+require_relative './variable_size'
+
 class Repeat
   def initialize(count, rule)
     @data = []
@@ -30,6 +32,17 @@ class Repeat
 
   def duplicate
     Repeat.new @count, @rule.duplicate
+  end
+
+  def size_of
+    puts @count
+
+    case @count
+    when VariableSize
+      Bytes.new @count
+    else
+      @rule.size_of * @count.value
+    end
   end
 
   def to_s

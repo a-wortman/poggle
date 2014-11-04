@@ -17,4 +17,16 @@ class Eof
   def to_s
     "EOF"
   end
+
+  def bits
+    0
+  end
+
+  def bytes
+    0
+  end
+
+  def size_of
+    Bytes.new ConstSize.new 0
+  end
 end

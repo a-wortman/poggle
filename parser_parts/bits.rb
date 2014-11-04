@@ -9,22 +9,29 @@ class Bits
   end
 
   def initialize(size)
-    @size = size || 1
-  end
-
-  def value
-    @size.value
+    @size = size || (ConstSize.new 1)
   end
 
   def +(other)
-    Bits.new (@size + other.bit_size)
+    return other unless other.const
+    Bits.new (@size.force + other.bits)
   end
 
-  def size
-    @size
+  def *(other)
+    return other unless other.const
+    Bits.new (@size.force * other)
   end
 
-  def bit_size
-    @size
+  def const
+    @size.const
+  end
+
+  def bits
+    @size.force
+  end
+
+  def bytes
+    raise "not a byte-sized value" if @size % 8 == 0
+    @size.force / 8
   end
 end

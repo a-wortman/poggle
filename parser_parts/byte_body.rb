@@ -63,7 +63,7 @@ class ByteBody
   end
 
   def size_of
-    ConstSize.new Bytes.new 1
+    Bytes.new ConstSize.new 1
   end
 
   def to_s
