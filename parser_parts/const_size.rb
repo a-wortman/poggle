@@ -3,8 +3,12 @@ class ConstSize
     @value = value
   end
 
-  def value
+  def force
     @value
+  end
+
+  def const
+    true
   end
 
   def to_s
@@ -12,6 +16,12 @@ class ConstSize
   end
 
   def +(other)
+    return other unless other.const
     ConstSize.new(other.value + @value)
+  end
+
+  def *(other)
+    return other unless other.const
+    ConstSize.new(other.value * @value)
   end
 end

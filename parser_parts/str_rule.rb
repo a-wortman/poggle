@@ -19,7 +19,7 @@ class StrRule
   end
 
   def size_of
-    ConstSize.new Bytes.new @matchStr.length
+    Bytes.new ConstSize.new @matchStr.length
   end
 
   def match(bytes)

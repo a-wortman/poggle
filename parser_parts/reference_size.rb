@@ -8,7 +8,12 @@ class ReferenceSize
     if not @context[@name]
       raise "Variable #{@name} is undefined"
     end
-    extractFor(@context[@name].value)
+    if @context[@name].value
+      extractFor(@context[@name].value)
+    else
+      # this isn't matched yet, so the size is not concrete
+      VariableSize.new
+    end
   end
 
   def to_s
