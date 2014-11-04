@@ -17,7 +17,6 @@ require_relative './parser_parts/disjunction'
 require_relative './parser_parts/conjunction'
 require_relative './parser_parts/repeat'
 require_relative './parser_parts/rule'
-require_relative './parser_parts/size'
 require_relative './parser_parts/eof'
 require_relative './parser_parts/sum'
 require_relative './parser_parts/sub'
@@ -91,7 +90,7 @@ size_t <-
   name size_multiple? {
     Prim.new _[0], _[1]
   }
-size_multiple <- ~'{' size_expr ~'}' { Size.new _ }
+size_multiple <- ~'{' size_expr ~'}'
 size_expr <- size_mult
 size_mult <-
   size_atom ~'/' size_mult { Div.new _[0], _[1] } /
@@ -103,7 +102,7 @@ size_sum <-
   size_atom
 size_atom <- size_const / size_unknown / size_label / ~'(' size_expr ~')'
 size_unknown <- '_' { UnboundedSize.new }
-size_const <- @(DIGIT+) { ConstSize.new _ }
+size_const <- lit_num { ConstSize.new _ }
 size_label <- name { ReferenceSize.new _, Components.vars }
 
 ext <- ~':ext:' ~newln exts ~newln ~newln    ~{

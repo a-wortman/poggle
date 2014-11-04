@@ -1,10 +1,10 @@
 class AnyBytes
   def initialize(size)
-    @size = ConstSize.new Bytes.new (size ? size : 1)
+    @size = Bytes.new ConstSize.new (size ? size : 1)
   end
 
   def duplicate
-    AnyBytes.new @size
+    AnyBytes.new @size.bytes
   end
 
   def requirements
@@ -16,7 +16,7 @@ class AnyBytes
 
   def match(bytes)
     @data = []
-    for i in 0..@size.value-1
+    for i in 0..(@size.bytes-1)
       if bytes.eof
         return false
       else
@@ -32,11 +32,6 @@ class AnyBytes
 
   def size_of
     @size
-  end
-
-  def clone
-    puts "Cloning!"
-    AnyBytes.new size.value
   end
 
   def resolved

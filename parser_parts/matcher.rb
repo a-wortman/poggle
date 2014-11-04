@@ -3,12 +3,24 @@ class Matcher
     @bytes = data.bytes
     @marks = []
     @pointer = 0
+    @bitPointer = 0
   end
 
   def next
     ret = @bytes[@pointer]
     @pointer += 1
     ret
+  end
+
+  def next_bit
+    extract_from = @bytes[@pointer]
+    bit = (extract_from >> (7 - @bitPointer)) & 1
+    @bitPointer += 1
+    if @bitPointer == 8
+      @bitPointer = 0
+      @pointer += 1
+    end
+    bit
   end
 
   def eof

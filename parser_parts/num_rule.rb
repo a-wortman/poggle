@@ -46,7 +46,7 @@ class NumRule
   end
 
   def size_of
-    ConstSize.new Bytes.new @bytes.length
+    Bytes.new ConstSize.new @bytes.length
   end
 
   def match(bytes)

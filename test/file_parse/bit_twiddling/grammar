@@ -1,0 +1,7 @@
+:components:
+init: bit{3} := b110
+data_len: bit{5}
+some_byte: byte
+data := len\data_len:some_byte{len}
+
+root := init:data:eof
