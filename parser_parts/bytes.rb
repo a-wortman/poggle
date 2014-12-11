@@ -30,9 +30,9 @@ class Bytes
     return self unless const
     case other
     when Bytes
-      Bytes.new(bytes + other.bytes)
+      Bytes.new ConstSize.new(bytes + other.bytes)
     when Bits
-      Bits.new(bits + other.bits)
+      Bits.new ConstSize.new(bits + other.bits)
     else
       throw "Unhandlable size #{other}"
     end
