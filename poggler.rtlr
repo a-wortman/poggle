@@ -1,27 +1,7 @@
 require 'rattler'
-require_relative './parser_parts/variable_binding'
-require_relative './parser_parts/unbounded_size'
-require_relative './parser_parts/const_size'
-require_relative './parser_parts/reference_size'
-require_relative './parser_parts/bits'
-require_relative './parser_parts/bytes'
-require_relative './parser_parts/prim'
-require_relative './parser_parts/rule_reference'
-require_relative './parser_parts/byte_body'
-require_relative './parser_parts/bit_body'
-require_relative './parser_parts/components'
-require_relative './parser_parts/str_rule'
-require_relative './parser_parts/num_rule'
-require_relative './parser_parts/rule_body'
-require_relative './parser_parts/disjunction'
-require_relative './parser_parts/conjunction'
-require_relative './parser_parts/repeat'
-require_relative './parser_parts/rule'
-require_relative './parser_parts/eof'
-require_relative './parser_parts/sum'
-require_relative './parser_parts/sub'
-require_relative './parser_parts/div'
-require_relative './parser_parts/mul'
+
+require 'REPLACEME'
+#replaced with Dir[File.join(File.dirname(__FILE__), 'parser_parts', '**', '*.rb')].each {|file| require file }
 
 parser PogglerParser < Rattler::Runtime::PackratParser
 

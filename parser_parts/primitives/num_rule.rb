@@ -1,4 +1,6 @@
-class NumRule
+require_relative '../requirementless'
+
+class NumRule < Requirementless
   def initialize(num)
     @matchNum = num
     word_size = word_size @matchNum
@@ -32,17 +34,6 @@ class NumRule
 
   def duplicate
     NumRule.new @matchNum
-  end
-
-  def requirements
-    []
-  end
-
-  def resolved
-    true
-  end
-
-  def resolve(arg)
   end
 
   def size_of

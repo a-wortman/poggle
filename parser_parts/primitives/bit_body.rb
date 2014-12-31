@@ -1,21 +1,12 @@
-class BitBody
+require_relative '../requirementless'
+
+class BitBody < Requirementless
   def initialize(bits)
     @body = bits
   end
 
   def duplicate
     BitBody.new @body
-  end
-
-  def requirements
-    []
-  end
-
-  def resolved
-    true
-  end
-
-  def resolve(arg)
   end
 
   def match(bytes)
@@ -30,7 +21,7 @@ class BitBody
   end
 
   def size_of
-    ConstSize.new Bits.new @body.length
+    Bits.new ConstSize.new @body.length
   end
 
   def to_s

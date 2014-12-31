@@ -16,7 +16,7 @@ class ConstSize
   end
 
   def +(other)
-    return other unless other.const
+    return other unless other.const # is knowable perhaps a better word?
     ConstSize.new(other.value + @value)
   end
 

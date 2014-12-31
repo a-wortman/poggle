@@ -1,2 +1,0 @@
-class UnboundedSize
-end
