@@ -1,25 +1,12 @@
-class StrRule
+require_relative '../requirementless'
+
+class StrRule < Requirementless
   def initialize(str)
     @matchStr = str
   end
 
   def duplicate
     StrRule.new @matchStr
-  end
-
-  def requirements
-    []
-  end
-
-  def resolved
-    true
-  end
-
-  def resolve(arg)
-  end
-
-  def size_of
-    Bytes.new ConstSize.new @matchStr.length
   end
 
   def match(bytes)
@@ -31,6 +18,10 @@ class StrRule
       end
     end
     true
+  end
+
+  def size_of
+    Bytes.new ConstSize.new @matchStr.length
   end
 
   def to_s

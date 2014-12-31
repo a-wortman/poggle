@@ -1,7 +1,8 @@
-require_relative './any_bytes'
-require_relative './any_bits'
+require_relative './primitives/any_bytes'
+require_relative './primitives/any_bits'
+require_relative './body_proxy'
 
-class RuleBody
+class RuleBody < BodyProxy
   def initialize(size, body)
     @size = size
     @body = body
@@ -25,26 +26,6 @@ class RuleBody
 
   def duplicate
     RuleBody.new @size, @body.duplicate
-  end
-
-  def resolved
-    @body.resolved
-  end
-
-  def requirements
-    @body.requirements
-  end
-
-  def resolve(arg)
-    @body.resolve(arg)
-  end
-
-  def match(bytes)
-    @body.match(bytes.mark)
-  end
-
-  def size_of
-    @body.size_of
   end
 
   def matched

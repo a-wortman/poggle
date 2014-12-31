@@ -8,19 +8,6 @@ class Conjunction
     Conjunction.new @a.duplicate, @b.duplicate
   end
 
-  def resolved
-    @a.resolved && @b.resolved
-  end
-
-  def requirements
-    @a.requirements + @b.requirements
-  end
-
-  def resolve(arg)
-    @a.resolve(arg)
-    @b.resolve(arg)
-  end
-
   def match(bytes)
     a_match = @a.match(bytes)
     if a_match
@@ -33,6 +20,19 @@ class Conjunction
       bytes.revert
       false
     end
+  end
+
+  def resolved
+    @a.resolved && @b.resolved
+  end
+
+  def requirements
+    @a.requirements + @b.requirements
+  end
+
+  def resolve(arg)
+    @a.resolve(arg)
+    @b.resolve(arg)
   end
 
   def size_of
