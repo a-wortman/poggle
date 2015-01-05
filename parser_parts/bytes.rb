@@ -1,4 +1,4 @@
-require_relative './const_size'
+require_relative '../sizes/const_size'
 
 class Bytes
   @@unit = "bytes"
@@ -39,7 +39,7 @@ class Bytes
   end
 
   def *(other)
-    Bytes.new(@size * other)
+    Bytes.new ConstSize.new(@size * other)
   end
 
   def size
