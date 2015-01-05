@@ -1,4 +1,4 @@
-require_relative './const_size'
+require_relative '../sizes/const_size'
 
 class Bytes
   @@unit = "bytes"
