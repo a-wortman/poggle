@@ -84,7 +84,7 @@ StringOne: byte := "1"
 UnicodeString: byte{3} := u"💽"
 ```
 
-Strings are ***not*** null terminated. For C-string style, see [below](conjunction).
+Strings are ***not*** null terminated. For C-string style, use conjunction (see below) to require `0x00` after your string.
 
 \* actual sizes may well not be `characterCount * unitSize`, Unicode may or may not use multiple code points for a single symbol
 
@@ -100,7 +100,7 @@ File := MagicNumber:Data
 
 The second example above matches any file starting with the bytes `CA FE BA BE` and any sixteen bytes following.
 
-Also useful is combining a string from above with `:
+Also useful is combining a string from above with `:`
 
 ## Disjunction
 Sometimes data has a structure that requires saying "X is A or B". This is stated in Poggle by using `|` between two expressions.
