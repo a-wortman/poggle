@@ -9,7 +9,7 @@ class Components
   @rules_by_name
 
   def initialize(first, rest)
-    @debug = true
+    @debug = false
 
     @rules_by_name = {}
     rest.unshift first
