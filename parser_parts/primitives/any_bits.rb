@@ -1,4 +1,6 @@
-class AnyBits
+require_relative '../requirementless'
+
+class AnyBits < Requirementless
   def initialize(size)
     @size = Bits.new ConstSize.new (size ? size : 1)
   end
@@ -18,19 +20,8 @@ class AnyBits
     true
   end
 
-  def resolved
-    true
-  end
-
   def duplicate
     AnyBits.new @size.bits
-  end
-
-  def requirements
-    []
-  end
-
-  def resolve(arg)
   end
 
   def matched

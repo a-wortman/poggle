@@ -1,4 +1,4 @@
-class Rule
+class Rule < BodyProxy
   def initialize(name, body)
     @name = name
     @body = body
@@ -12,32 +12,12 @@ class Rule
     @body.infer_size
   end
 
-  def resolved
-    @body.resolved
-  end
-
-  def requirements
-    @body.requirements
-  end
-
-  def resolve(rules)
-    @body.resolve(rules)
-  end
-
   def name
     @name
   end
 
-  def match(bytes)
-    @body.match(bytes)
-  end
-
   def matched
     @body.matched
-  end
-
-  def size_of
-    @body.size_of
   end
 
   def to_s

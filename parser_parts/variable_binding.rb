@@ -1,4 +1,6 @@
-class VariableBinding
+require_relative "./body_proxy"
+
+class VariableBinding < BodyProxy
   def initialize(name, body)
     @name = name
     @body = body
@@ -11,26 +13,6 @@ class VariableBinding
 
   def value
     @body.matched
-  end
-
-  def resolved
-    @body.resolved
-  end
-
-  def resolve(args)
-    @body.resolve(args)
-  end
-
-  def match(bytes)
-    @body.match(bytes)
-  end
-
-  def requirements
-    @body.requirements
-  end
-
-  def size_of
-    @body.size_of
   end
 
   def duplicate

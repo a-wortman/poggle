@@ -1,17 +1,12 @@
-class AnyBytes
+require_relative '../requirementless'
+
+class AnyBytes < Requirementless
   def initialize(size)
     @size = Bytes.new ConstSize.new (size ? size : 1)
   end
 
   def duplicate
     AnyBytes.new @size.bytes
-  end
-
-  def requirements
-    []
-  end
-
-  def resolve(arg)
   end
 
   def match(bytes)
@@ -32,9 +27,5 @@ class AnyBytes
 
   def size_of
     @size
-  end
-
-  def resolved
-    true
   end
 end

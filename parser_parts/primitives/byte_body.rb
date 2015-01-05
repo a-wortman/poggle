@@ -1,4 +1,6 @@
-class ByteBody
+require_relative '../requirementless'
+
+class ByteBody < Requirementless
   @base = 10
   def initialize(byte)
     @base = base_for(byte)
@@ -7,6 +9,10 @@ class ByteBody
 
   def duplicate
     ByteBody.new val_s
+  end
+
+  def match(bytes)
+    bytes.next == @byte
   end
 
   def value_for(byte, base)
@@ -20,21 +26,6 @@ class ByteBody
       end
 
     val_str.to_i(base)
-  end
-
-  def requirements
-    []
-  end
-
-  def resolved
-    true
-  end
-
-  def resolve(arg)
-  end
-
-  def match(bytes)
-    bytes.next == @byte
   end
 
   def base_for(byte)
