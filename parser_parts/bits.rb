@@ -14,12 +14,12 @@ class Bits
 
   def +(other)
     return other unless other.const
-    Bits.new (@size.force + other.bits)
+    Bits.new ConstSize.new (@size.force + other.bits)
   end
 
   def *(other)
     return other unless other.const
-    Bits.new (@size.force * other)
+    Bits.new ConstSize.new (@size.force * other)
   end
 
   def const
