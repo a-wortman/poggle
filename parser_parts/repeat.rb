@@ -1,4 +1,4 @@
-require_relative './variable_size'
+require_relative './sizes/variable_size'
 
 class Repeat
   def initialize(count, rule)
