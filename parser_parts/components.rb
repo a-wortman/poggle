@@ -9,6 +9,8 @@ class Components
   @rules_by_name
 
   def initialize(first, rest)
+    @debug = false
+
     @rules_by_name = {}
     rest.unshift first
     @rules = rest
@@ -41,7 +43,12 @@ class Components
   end
 
   def infer_sizes
-    @rules.each { |rule| rule.infer_size }
+    @rules.each { |rule|
+      if @debug
+        puts "Inferring size for #{rule}"
+      end
+      rule.infer_size
+    }
   end
 
   def check_sizes
