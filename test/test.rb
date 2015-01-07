@@ -1,6 +1,7 @@
 #! /usr/bin/env ruby
 
 require '../poggler_parser'
+require '../parser_parts/matcher'
 
 dirs = Dir.glob("**/*")
 dirs.delete("test.rb")
@@ -16,7 +17,9 @@ def test_good(filenames)
   filenames.each { |name|
     puts "Testing #{name}..."
     contents = File.open(name, "r").read
-    PogglerParser.parse!(contents)
+    parser = PogglerParser.parse!(contents)
+    data = File.open("#{name}.file", "r").read
+    parser.match(Matcher.new data)
     puts "  [x] Passed"
   }
 end
