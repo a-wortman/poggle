@@ -7,7 +7,7 @@ dirs = Dir.glob("**/*")
 dirs.delete("test.rb")
 dirs = dirs.select { |name| File.file? name }
 
-expect_good = dirs.select { |name| name =~ /\/good\// }
+expect_good = dirs.select { |name| name =~ /\/good\// && (not name.end_with?(".file")) }
 expect_bad = dirs.select { |name| name =~ /\/bad\// }
 
 puts "Expecting the following to be good:", expect_good
