@@ -9,6 +9,7 @@ class Disjunction
   end
 
   def match(bytes)
+    bytes.mark
     a_match = @a.match(bytes)
     if a_match
       true
