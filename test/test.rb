@@ -19,8 +19,11 @@ def test_good(filenames)
     contents = File.open(name, "r").read
     parser = PogglerParser.parse!(contents)
     data = File.open("#{name}.file", "r").read
-    parser.match(Matcher.new data)
-    puts "  [x] Passed"
+    if parser.match(Matcher.new data)
+      puts "  [x] Passed"
+    else
+      puts "  [ ] Failed"
+    end
   }
 end
 
