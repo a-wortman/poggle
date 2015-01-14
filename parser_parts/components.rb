@@ -74,6 +74,7 @@ class Components
     end
     yes = @start.match(bytes)
     puts "Yes? #{yes}"
+    yes
   end
 
   def to_s
