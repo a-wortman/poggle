@@ -11,12 +11,21 @@ class AnyBytes < Requirementless
 
   def match(bytes)
     @data = []
-    for i in 0..(@size.bytes-1)
-      if bytes.eof
-        return false
-      else
-        @data.unshift bytes.next
+    # and this is where we gotta handle
+    # unbounded sizes...
+    case @size.bytes
+    when ConstSize
+      for i in 0..(@size.bytes-1)
+        if bytes.eof
+          return false
+        else
+          @data.unshift bytes.next
+        end
       end
+    when UnboundedSize
+      throw "***Learn how to handle an unbounded size!***"
+    else
+      raise "Don't know how to handle #{@size.bytes}"
     end
     true
   end
