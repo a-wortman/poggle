@@ -13,7 +13,9 @@ class AnyBytes < Requirementless
     @data = []
     # and this is where we gotta handle
     # unbounded sizes...
-    case @size.bytes
+    puts "size bytes type... #{@size.value.class}"
+    puts "size bytes value type... #{@size.bytes.class}"
+    case @size.value
     when ConstSize
       for i in 0..(@size.bytes-1)
         if bytes.eof
@@ -25,7 +27,7 @@ class AnyBytes < Requirementless
     when UnboundedSize
       throw "***Learn how to handle an unbounded size!***"
     else
-      raise "Don't know how to handle #{@size.bytes}"
+      raise "Don't know how to handle #{@size.value.class}"
     end
     true
   end
