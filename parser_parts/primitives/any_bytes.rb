@@ -2,21 +2,27 @@ require_relative '../requirementless'
 
 class AnyBytes < Requirementless
   def initialize(size)
-    @size = Bytes.new ConstSize.new (size ? size : 1)
+    @size = Bytes.new case size
+    when ConstSize
+      size
+    when UnboundedSize
+      size
+    else
+       ConstSize.new (size ? size : 1)
+    end
   end
 
   def duplicate
-    AnyBytes.new @size.bytes
+    AnyBytes.new @size.value
   end
 
   def match(bytes)
     @data = []
     # and this is where we gotta handle
     # unbounded sizes...
-    puts "size bytes type... #{@size.value.class}"
-    puts "size bytes value type... #{@size.bytes.class}"
     case @size.value
     when ConstSize
+      puts @size.bytes.class
       for i in 0..(@size.bytes-1)
         if bytes.eof
           return false

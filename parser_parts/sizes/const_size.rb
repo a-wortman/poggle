@@ -1,10 +1,12 @@
 class ConstSize
+  attr_reader :value
+
   def initialize(value)
     @value = value
   end
 
   def force
-    @value
+    self
   end
 
   def const

@@ -20,12 +20,12 @@ class Bits
 
   def +(other)
     return other unless other.const
-    Bits.new ConstSize.new (@size.force + other.bits)
+    Bits.new ConstSize.new (@size.value + other.bits)
   end
 
   def *(other)
     return other unless other.const
-    Bits.new ConstSize.new (@size.force * other)
+    Bits.new ConstSize.new (@size.value * other)
   end
 
   def const
@@ -33,11 +33,11 @@ class Bits
   end
 
   def bits
-    @size.force
+    @size.value
   end
 
   def bytes
     raise "not a byte-sized value" if @size % 8 == 0
-    @size.force / 8
+    @size.value / 8
   end
 end
