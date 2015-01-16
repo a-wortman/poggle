@@ -9,9 +9,9 @@ class RuleBody < BodyProxy
     if not @body
       case @size
       when Bits
-        @body = AnyBits.new @size.bits
+        @body = AnyBits.new @size.value
       when Bytes
-        @body = AnyBytes.new @size.bytes
+        @body = AnyBytes.new @size.value
       else
         raise "Cannot handle unit #{@size.unit}"
       end

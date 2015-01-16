@@ -21,11 +21,11 @@ class Bytes
   end
 
   def bytes
-    @size.force
+    @size.value
   end
 
   def bits
-    @size.force * 8
+    @size.value * 8
   end
 
   def const
