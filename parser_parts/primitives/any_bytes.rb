@@ -31,7 +31,7 @@ class AnyBytes < Requirementless
         end
       end
     when UnboundedSize
-      throw "***Learn how to handle an unbounded size!***"
+#      throw "***Learn how to handle an unbounded size!***"
     else
       raise "Don't know how to handle #{@size.value.class}"
     end
