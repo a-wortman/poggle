@@ -34,13 +34,15 @@ rule_cons <-
   rule_disj ~":" rule_cons  { Conjunction.new _[0], _[1] } /
   rule_disj
 rule_disj <-
-  rule_opt ~'|' rule_disj  { Disjunction.new _[0], _[1] } /
+  rule_with_variable_binding ~'|' rule_disj  { Disjunction.new _[0], _[1] } /
+  rule_with_variable_binding
+rule_with_variable_binding <-
+  name ~"\\" rule_atom { VariableBinding.new _[0], _[1] } /
   rule_opt
 rule_opt <-
-  rule_statement ~'?' /
+  rule_statement ~'?' { Disjunction.new _, Repeat.new(ConstSize.new(0), ByteBody.new("0x00")) } /
   rule_statement
 rule_statement <-
-  rule_with_variable_binding /
   function_with_args /
   rule_atom size_multiple?  {
     if _[1] != []
@@ -53,7 +55,6 @@ function_with_args <- name '(' name (',' name)* ')' ~{
   puts "Function call of " + _[0] + " with " + _[1] + " and others?"
   _
 }
-rule_with_variable_binding <- name ~"\\" rule_atom { VariableBinding.new _[0], _[1] }
 rule_atom <-
   'eof'     { Eof.new } /
   lit_byte  { ByteBody.new _ } /

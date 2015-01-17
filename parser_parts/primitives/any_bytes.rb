@@ -22,7 +22,6 @@ class AnyBytes < Requirementless
     # unbounded sizes...
     case @size.value
     when ConstSize
-      puts @size.bytes.class
       for i in 0..(@size.bytes-1)
         if bytes.eof
           return false
