@@ -45,7 +45,7 @@ class Bytes
   end
 
   def *(other)
-    Bytes.new ConstSize.new(@size * other)
+    Bytes.new(@size * other)
   end
 
   def to_s

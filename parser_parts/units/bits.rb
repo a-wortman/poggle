@@ -37,7 +37,11 @@ class Bits
   end
 
   def bytes
-    raise "not a byte-sized value" if @size % 8 == 0
+    raise "#{self} is not a byte-sized value" if @size.value % 8 != 0
     @size.value / 8
+  end
+
+  def to_s
+    "#{@size.value} bits"
   end
 end
