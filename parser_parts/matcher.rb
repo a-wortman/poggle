@@ -1,9 +1,14 @@
 class Matcher
+  attr_accessor :pointer
   def initialize(data)
     @bytes = data.bytes
     @marks = []
     @pointer = 0
     @bitPointer = 0
+  end
+
+  def peek
+    @bytes[@pointer]
   end
 
   def next
