@@ -12,12 +12,8 @@ class Conjunction
     a_match = @a.match(bytes)
     if a_match
       b_match = @b.match(bytes)
-      if not b_match
-        bytes.revert
-      end
       b_match
     else
-      bytes.revert
       false
     end
   end

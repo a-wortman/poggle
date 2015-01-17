@@ -41,7 +41,7 @@ class NumRule < Requirementless
   end
 
   def match(bytes)
-    for i in 0..@bytes.length
+    for i in 0..(@bytes.length-1)
       if @bytes[i] != bytes.next
         return false
       end
