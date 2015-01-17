@@ -35,13 +35,11 @@ class Repeat
   end
 
   def size_of
-    puts @count
-
     case @count
     when VariableSize
       Bytes.new @count
     else
-      @rule.size_of * @count.value
+      @rule.size_of * @count
     end
   end
 
