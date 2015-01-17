@@ -72,8 +72,7 @@ class Components
     if not @start
       raise "Start rule (#{@@start_name}) must be defined"
     end
-    yes = @start.match(bytes)
-    puts "Yes? #{yes}"
+    @start.match(bytes)
   end
 
   def to_s

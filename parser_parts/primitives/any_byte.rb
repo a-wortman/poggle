@@ -1,3 +1,5 @@
+require_relative '../requirementless'
+
 class AnyByte < Requirementless
   def initialize(size)
     @size = Bytes.new ConstSize.new 1

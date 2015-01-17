@@ -1,12 +1,13 @@
 #! /usr/bin/env ruby
 
 require '../poggler_parser'
+require '../parser_parts/matcher'
 
 dirs = Dir.glob("**/*")
 dirs.delete("test.rb")
 dirs = dirs.select { |name| File.file? name }
 
-expect_good = dirs.select { |name| name =~ /\/good\// }
+expect_good = dirs.select { |name| name =~ /\/good\// && (not name.end_with?(".file")) }
 expect_bad = dirs.select { |name| name =~ /\/bad\// }
 
 puts "Expecting the following to be good:", expect_good
@@ -16,8 +17,13 @@ def test_good(filenames)
   filenames.each { |name|
     puts "Testing #{name}..."
     contents = File.open(name, "r").read
-    PogglerParser.parse!(contents)
-    puts "  [x] Passed"
+    parser = PogglerParser.parse!(contents)
+    data = File.open("#{name}.file", "r").read
+    if parser.match(Matcher.new data)
+      puts "  [x] Passed"
+    else
+      puts "  [ ] Failed"
+    end
   }
 end
 

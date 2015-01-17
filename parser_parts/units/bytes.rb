@@ -1,6 +1,8 @@
 require_relative '../sizes/const_size'
 
 class Bytes
+  attr_accessor :size
+
   @@unit = "bytes"
   def self.unit
     @@unit
@@ -14,12 +16,16 @@ class Bytes
     @size = size || (ConstSize.new 1)
   end
 
+  def value
+    @size
+  end
+
   def bytes
-    @size.force
+    @size.value
   end
 
   def bits
-    @size.force * 8
+    @size.value * 8
   end
 
   def const
@@ -39,11 +45,7 @@ class Bytes
   end
 
   def *(other)
-    Bytes.new ConstSize.new(@size * other)
-  end
-
-  def size
-    bytes
+    Bytes.new(@size * other)
   end
 
   def to_s

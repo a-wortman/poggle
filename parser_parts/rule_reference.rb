@@ -44,6 +44,7 @@ class RuleReference
   end
 
   def size_of
+    @rule.infer_size
     @rule.size_of
   end
 
@@ -51,7 +52,7 @@ class RuleReference
     if not @rule
       "(Unresolved reference to rule #{@name})"
     else
-      "(Ref: (#{@rule})"
+      "(Ref: (#{@rule}))"
     end
   end
 end
