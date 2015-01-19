@@ -3,5 +3,7 @@ onebyte := 17-250
 twobyte := 1-280
 eightbit := b1-b01101100
 twobit := b0-b10
+sixbit := b0-b111111
+hexbyte := 0x40-0x50
 
-root := onebyte{2}:twobyte:eightbit
+root := onebyte{2}:twobyte:eightbit:twobit:sixbit:hexbyte

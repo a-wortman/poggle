@@ -2,17 +2,31 @@ include Math
 
 class NumRange < Requirementless
   def initialize(low, high)
+    @low = convert(low)
+    @high = convert(high)
+
     if low > high
       throw "Low bound (#{low}) must be below high (#{high})"
     end
 
-    @low = low
-    @high = high
-    @byte_count = word_size(high)
+    @byte_count = word_size(@high)
   end
 
   def duplicate
     NumRange.new @low, @high
+  end
+
+  def convert(value)
+    case value
+    when Fixnum
+      value
+    when String
+      if value.start_with?("0x")
+        value[2..-1].to_i(16)
+      end
+    else
+      raise "Unable to handle value #{value} (#{value.class})"
+    end
   end
 
   def match(bytes)
