@@ -1,0 +1,5 @@
+:components:
+onebyte := 17-250
+twobyte := 1-280
+
+root := onebyte{2}:twobyte
