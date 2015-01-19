@@ -3,6 +3,7 @@ require_relative '../requirementless'
 class ByteBody < Requirementless
   @base = 10
   def initialize(byte)
+    @orig_value = byte
     @base = base_for(byte)
     @byte = value_for(byte, @base)
   end
@@ -25,7 +26,11 @@ class ByteBody < Requirementless
         byte[1..-1]
       end
 
-    val_str.to_i(base)
+    value = val_str.to_i(base)
+    if word_size(value) > 1
+      raise "Byte body only allows values that can be expressed in one byte. Expected value is #{@orig_value}"
+    end
+    value
   end
 
   def base_for(byte)
