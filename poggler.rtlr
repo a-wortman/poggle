@@ -58,8 +58,8 @@ function_with_args <- name '(' name (',' name)* ')' ~{
 rule_atom <-
   'eof'     { Eof.new } /
   lit_num ~'-' lit_num { NumRange.new _[0], _[1] } /
-  lit_byte ~'-' lit_byte { NunRange.new _[0], _[1] } /
-  lit_bits ~'-' lit_bits { NumRange.new _[0], _[1] } /
+  lit_byte ~'-' lit_byte { NumRange.new _[0], _[1] } /
+  lit_bits ~'-' lit_bits { BitRange.new _[0], _[1] } /
   lit_byte  { ByteBody.new _ } /
   lit_bits  { BitBody.new _ } /
   lit_num   { NumRule.new _ } /
