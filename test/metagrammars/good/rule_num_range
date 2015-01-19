@@ -1,5 +1,7 @@
 :components:
 onebyte := 17-250
 twobyte := 1-280
+eightbit := b1-b01101100
+twobit := b0-b10
 
-root := onebyte{2}:twobyte
+root := onebyte{2}:twobyte:eightbit
