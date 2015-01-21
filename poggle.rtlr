@@ -3,7 +3,7 @@ require 'rattler'
 require 'REPLACEME'
 #replaced with Dir[File.join(File.dirname(__FILE__), 'parser_parts', '**', '*.rb')].each {|file| require file }
 
-parser PogglerParser < Rattler::Runtime::PackratParser
+parser PoggleParser < Rattler::Runtime::PackratParser
 
 %whitespace BLANK*
 
@@ -12,7 +12,8 @@ start   <- ext? functions? components  { Components.new _.last[0], _.last[1] }
 functions <- ~':functions:' ~newln function (~newln+ function)* ~newln ~newln
 
 function <- name ~'(' size_t ~'):' (size_t / name) ~{
-  puts "Read function declaration " + _[0]
+  #puts "Read function declaration " + _[0]
+  #TODO: have an expectation of this declaration being fulfilled
   _
 }
 
