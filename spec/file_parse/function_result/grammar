@@ -1,0 +1,7 @@
+:functions:
+buildShort(byte{2}): byte{2}
+foo(byte{_}): buildShort
+
+:components:
+B: byte{_}
+root := b\B
