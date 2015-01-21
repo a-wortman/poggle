@@ -1,4 +1,4 @@
 #! /bin/sh
-rtlr poggler.rtlr -o poggler_parser.rb -f
+rtlr poggle.rtlr -o poggle_parser.rb -f
 REPLACEALL="Dir[File.join(File.dirname(__FILE__), 'parser_parts', '**', '*.rb')].each {|file| require file }"
-sed -i "s/^.*REPLACEME.$/$REPLACEALL/" poggler_parser.rb
+sed -i "s/^.*REPLACEME.$/$REPLACEALL/" poggle_parser.rb
