@@ -10,7 +10,6 @@ dirs = dirs.select { |name| File.file? name }
 good_grammars = Dir.glob("spec/fixtures/metagrammars/good/*")
 good_files = Dir.glob("spec/fixtures/files/good/*")
   #dirs.select { |name| name =~ /\/good\// }
-bad_grammars = dirs.select { |name| name =~ /\/bad\// }
 
 describe "poggle" do
   good_grammars.each { |grammar_path|
