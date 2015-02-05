@@ -1,0 +1,6 @@
+:components:
+Bs: byte{4}
+X := c\Bs
+Y := c\Bs
+
+root := X:Y
