@@ -1,6 +1,9 @@
 require_relative '../requirementless'
+require_relative '../scope/scopifier'
 
 class AnyBytes < Requirementless
+  include Scopifier
+
   def initialize(size)
     @size = Bytes.new case size
     when ConstSize

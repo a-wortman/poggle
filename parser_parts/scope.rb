@@ -1,14 +1,27 @@
 class Scope
-  def initialize(parent)
-    @parent = parent || NilScope
+  def initialize(parent = NilScope)
+    @parent = parent
     @vars = {}
   end
 
   def get(name)
-    @vars[name] || @parent.get(name)
+    if not @vars[name] # and parent == NilScope
+      raise "No such variable '#{name}'"
+    end
+    # no looking in parent scopes... yet
+    @vars[name] # || @parent.get(name)
   end
 
-  def put(name, var)
-    @vars[name] = var
+  def bind(var_binding)
+    name = var_binding.name
+    if @vars[name]
+      raise "Cannot rebind variable '#{name}'"
+    end
+    @vars[name] = var_binding
+  end
+
+
+  def child
+    Scope.new(self)
   end
 end

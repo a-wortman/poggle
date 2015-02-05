@@ -1,11 +1,5 @@
 class Components
   @@start_name = "root"
-  @@vars = {}
-
-  def self.vars
-    @@vars
-  end
-
   @rules_by_name
 
   def initialize(first, rest)
@@ -24,13 +18,10 @@ class Components
       raise "A start rule (named #{@@start_name}) must be defined"
     end
 
-    # hack around the fact that at parse-time VariableBinding are made
-    # and end up with a janky conflict scenario. Fixable with proper
-    # scoping but that's not done yet.
-    @@vars = {}
     link_dependencies
     infer_sizes
     check_sizes
+    @rules_by_name["root"].enscopen(Scope.new)
   end
 
   def unresolved_dependencies

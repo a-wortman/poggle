@@ -1,14 +1,15 @@
 require_relative "./body_proxy"
+require_relative "./scope/scopifier"
 
 class VariableBinding < BodyProxy
+  attr_accessor :name
+
+  include Scopifier
+  scopify :body
+
   def initialize(name, body)
     @name = name
     @body = body
-    if Components.vars[@name]
-      raise "Variables cannot be bound more than once in the same scope! Offending variable is named \"#{@name}\""
-    end
-
-    Components.vars[@name] = self
   end
 
   def value
@@ -17,6 +18,10 @@ class VariableBinding < BodyProxy
 
   def duplicate
     VariableBinding.new @name, @body
+  end
+
+  def bind
+    @scope.bind(@name, self)
   end
 
   def to_s

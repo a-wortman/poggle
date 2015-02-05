@@ -1,4 +1,8 @@
+require_relative './scope/scopifier'
+
 class RuleReference
+  include Scopifier
+
   def initialize(name)
     @name = name
   end

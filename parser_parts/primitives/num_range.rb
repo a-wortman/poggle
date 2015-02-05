@@ -1,6 +1,10 @@
+require_relative '../scope/scopifier'
+
 include Math
 
 class NumRange < Requirementless
+  include Scopifier
+
   def initialize(low, high)
     @low = convert(low)
     @high = convert(high)

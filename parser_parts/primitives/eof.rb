@@ -1,6 +1,9 @@
 require_relative '../requirementless'
+require_relative '../scope/scopifier'
 
 class Eof < Requirementless
+  include Scopifier
+
   def match(bytes)
     bytes.eof
   end

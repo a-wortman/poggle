@@ -1,9 +1,9 @@
 class NilScope
-  def self.get(name)
+  def get(name)
     raise "Unbound variable \"#{name}\" being used"
   end
 
-  def self.put(name, var)
+  def bind(name, var)
     raise "Binding names to NilScope is a bug. Offender is \"#{name}\" with value \"#{var}\""
   end
 end
