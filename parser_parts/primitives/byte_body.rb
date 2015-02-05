@@ -1,6 +1,9 @@
 require_relative '../requirementless'
+require_relative '../scope/scopifier'
 
 class ByteBody < Requirementless
+  include Scopifier
+
   @base = 10
   def initialize(byte)
     @orig_value = byte

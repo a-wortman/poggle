@@ -1,4 +1,8 @@
+require_relative "../scope/scopifier"
+
 class AnyBit < Requirementless
+  include Scopifier
+
   def initialize
     @size = Bits.new ConstSize.new 1
   end

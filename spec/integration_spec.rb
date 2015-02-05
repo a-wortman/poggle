@@ -11,6 +11,8 @@ good_grammars = Dir.glob("spec/fixtures/metagrammars/good/*")
 good_files = Dir.glob("spec/fixtures/files/good/*")
   #dirs.select { |name| name =~ /\/good\// }
 
+bad_grammars = Dir.glob("spec/fixtures/metagrammars/bad/*")
+
 describe "poggle" do
   good_grammars.each { |grammar_path|
     grammar_filename = Pathname.new(grammar_path).basename
@@ -31,4 +33,11 @@ describe "poggle" do
       end
     end
   }
+
+  context "rule_double_variables" do
+    it "rejects double variable declarations" do
+      grammar = File.open("spec/fixtures/metagrammars/bad/rule_double_variables", 'r').read
+      expect { PoggleParser.parse!(grammar) }.to raise_error("Cannot rebind variable 'a'")
+    end
+  end
 end

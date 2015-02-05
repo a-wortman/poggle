@@ -1,8 +1,11 @@
 require_relative '../requirementless'
+require_relative '../scope/scopifier'
 
 include Math
 
 class NumRule < Requirementless
+  include Scopifier
+
   def initialize(num)
     @matchNum = num
     word_size = word_size @matchNum

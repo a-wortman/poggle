@@ -1,4 +1,9 @@
+require_relative '../scope/scopifier'
+
 class Conjunction
+  include Scopifier
+  scopify :a, :b
+
   def initialize(a, b)
     @a = a
     @b = b

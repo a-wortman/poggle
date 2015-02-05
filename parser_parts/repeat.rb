@@ -1,6 +1,11 @@
 require_relative './sizes/variable_size'
+require_relative './scope/scopifier'
 
 class Repeat
+
+  include Scopifier
+  scopify :rule
+
   def initialize(count, rule)
     @data = []
     @count = count
