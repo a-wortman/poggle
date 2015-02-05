@@ -1,8 +1,14 @@
 require_relative './primitives/any_bytes'
 require_relative './primitives/any_bits'
 require_relative './body_proxy'
+require_relative './scope/scopifier'
 
 class RuleBody < BodyProxy
+
+  # consider yoinking this into BodyProxy
+  include Scopifier
+  scopify :body
+
   def initialize(size, body)
     @size = size
     @body = body

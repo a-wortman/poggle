@@ -1,6 +1,9 @@
 require_relative '../requirementless'
+require_relative '../scope/scopifier'
 
 class StrRule < Requirementless
+  include Scopifier
+
   def initialize(str)
     @matchStr = str
   end

@@ -14,6 +14,10 @@ class Bits
     @size = size || (ConstSize.new 1)
   end
 
+  def value
+    @size
+  end
+
   def type
     @size.class
   end
