@@ -1,10 +1,10 @@
-# NOT COMPLETE BY ANY MEANS
-
 :ext:
 [".class"]
 
 :components:
+u1: byte
 u2: byte{2}
+u4: byte{4}
 
 magic := 0xCA:0xFE:0xBA:0xBE
 
@@ -35,39 +35,83 @@ super_class := u2
 
 member_count := u2
 
-constant_pool_count: member_count
-cp_info :=
+CONSTANT_Class := 7
+CONSTANT_Fieldref := 9
+CONSTANT_Methodref := 10
+CONSTANT_InterfaceMethodref := 11
+CONSTANT_String := 8
+CONSTANT_Integer := 3
+CONSTANT_Float := 4
+CONSTANT_Long := 5
+CONSTANT_Double := 6
+CONSTANT_NameAndType := 12
+CONSTANT_Utf8 := 1
+CONSTANT_MethodHandle := 15
+CONSTANT_MethodType := 16
+CONSTANT_InvokeDynamic := 18
+
+constant_pool_count := member_count
+constant_pool_info :=
     count\constant_pool_count
   : constant_pool_entry{count}
 
-interfaces_count: member_count
+name_index := u2
+name_and_type_index := u2
+class_index := u2
+string_index := u2
+
+constant_pool_entry :=
+    (CONSTANT_Class:name_index)
+  | (CONSTANT_Fieldref:class_index:name_and_type_index)
+  | (CONSTANT_Methodref:class_index:name_and_type_index)
+  | (CONSTANT_InterfaceMethodref:class_index:name_and_type_index)
+  | (CONSTANT_String:string_index)
+  | (CONSTANT_Integer:u4)
+  | (CONSTANT_Float:u4)
+  | (CONSTANT_Long:u4:u4)
+  | (CONSTANT_Double:u4:u4)
+  | (CONSTANT_NameAndType:u2:u2)
+  | (CONSTANT_Utf8:length\u2:u1{length})
+  | (CONSTANT_MethodHandle:u1:u2)
+  | (CONSTANT_MethodType:u2)
+  | (CONSTANT_InvokeDynamic:u2:u2)
+
+interfaces_entry := 0
+
+interfaces_count := member_count
 interface_info :=
-    count\interfaces_count
-  : interfaces_entry{count}
+    ifcount\interfaces_count
+  : interfaces_entry{ifcount}
 
-fields_count: member_count
+fields_entry := 0
+
+fields_count := member_count
 field_info :=
-    count\fields_count
-  : fields_entry{count}
+    fcount\fields_count
+  : fields_entry{fcount}
 
-methods_count: member_count
+methods_entry := 0
+
+methods_count := member_count
 method_info :=
-    count\methods_count
-  : methods_entry{count}
+    mcount\methods_count
+  : methods_entry{mcount}
 
-attributes_count: member_count
+attributes_entry := 0
+
+attributes_count := member_count
 attribute_info :=
-    count\attributes_count
-  : attributes_entry{count}
+    acount\attributes_count
+  : attributes_entry{acount}
 
 root :=
     magic
   : version
-  : constant_pool
+  : constant_pool_info
   : access_flags
   : this_class
   : super_class
-  : interfaces
-  : fields
-  : methods
-  : attributes
+  : interfaces_info
+  : fields_info
+  : methods_info
+  : attributes_info
