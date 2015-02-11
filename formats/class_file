@@ -20,13 +20,13 @@ ACC_ABSTRACT: bit
 ACC_SYNTHETIC: bit
 ACC_ANNOTATION: bit
 ACC_ENUM: bit
-dc: bit := 0
+dc: bit := b0
 
 access_flags :=
-    dc:dc:dc:dc : dc:ACC_ENUM:ACC_ANNOTATION:ACC_SYNTHETIC
-  : dc:dc:dc:dc : dc:ACC_ABSTRACT:ACC_INTERFACE:dc
-  : dc:dc:dc:dc : dc:dc:ACC_SUPER:ACC_FINAL
-  : dc:dc:dc:dc : dc:dc:dc:ACC_PUBLIC
+    dc:ACC_ENUM:ACC_ANNOTATION:ACC_SYNTHETIC
+  : dc:ACC_ABSTRACT:ACC_INTERFACE:dc
+  : dc:dc:ACC_SUPER:ACC_FINAL
+  : dc:dc:dc:ACC_PUBLIC
 
 
 
@@ -53,7 +53,7 @@ CONSTANT_InvokeDynamic := 18
 constant_pool_count := member_count
 constant_pool_info :=
     count\constant_pool_count
-  : constant_pool_entry{count}
+  : constant_pool_entry{count - 1}
 
 name_index := u2
 name_and_type_index := u2
