@@ -46,6 +46,6 @@ class Bits
   end
 
   def to_s
-    "#{@size.value} bits"
+    "#{@size} bits"
   end
 end
