@@ -33,7 +33,7 @@ class Bytes
   end
 
   def +(other)
-    return self unless const
+    return self unless const and other.const
     case other
     when Bytes
       Bytes.new ConstSize.new(bytes + other.bytes)

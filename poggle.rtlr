@@ -88,7 +88,7 @@ size_sum <-
 size_atom <- size_const / size_unknown / size_label / ~'(' size_expr ~')'
 size_unknown <- '_' { UnboundedSize.new }
 size_const <- lit_num { ConstSize.new _ }
-size_label <- name { ReferenceSize.new _, Components.vars }
+size_label <- name { ReferenceSize.new _ }
 
 ext <- ~':ext:' ~newln exts ~newln ~newln    ~{
   puts("Expected extensions: " + _.join(', '))

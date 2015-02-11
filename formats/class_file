@@ -79,28 +79,28 @@ constant_pool_entry :=
 interfaces_entry := 0
 
 interfaces_count := member_count
-interface_info :=
+interfaces_info :=
     ifcount\interfaces_count
   : interfaces_entry{ifcount}
 
 fields_entry := 0
 
 fields_count := member_count
-field_info :=
+fields_info :=
     fcount\fields_count
   : fields_entry{fcount}
 
 methods_entry := 0
 
 methods_count := member_count
-method_info :=
+methods_info :=
     mcount\methods_count
   : methods_entry{mcount}
 
 attributes_entry := 0
 
 attributes_count := member_count
-attribute_info :=
+attributes_info :=
     acount\attributes_count
   : attributes_entry{acount}
 
