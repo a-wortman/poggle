@@ -25,7 +25,7 @@ class ReferenceSize
       extractFor(@scope.get(@name).value)
     else
       # this isn't matched yet, so the size is not concrete
-      raise "wtf value not defined"
+      raise "Value for #{name} is not yet matched"
     end
   end
 
