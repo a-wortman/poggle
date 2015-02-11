@@ -12,6 +12,10 @@ class Scope
     @vars[name] # || @parent.get(name)
   end
 
+  def defined?(name)
+    @vars.has_key?(name)
+  end
+
   def bind(var_binding)
     name = var_binding.name
     if @vars[name]
@@ -19,7 +23,6 @@ class Scope
     end
     @vars[name] = var_binding
   end
-
 
   def child
     Scope.new(self)

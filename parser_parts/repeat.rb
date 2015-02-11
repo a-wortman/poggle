@@ -4,7 +4,7 @@ require_relative './scope/scopifier'
 class Repeat
 
   include Scopifier
-  scopify :rule
+  scopify :rule, :count
 
   def initialize(count, rule)
     @data = []

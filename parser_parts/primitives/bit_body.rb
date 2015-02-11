@@ -1,6 +1,9 @@
 require_relative '../requirementless'
+require_relative '../scope/scopifier'
 
 class BitBody < Requirementless
+  include Scopifier
+
   def initialize(bits)
     @body = bits
   end

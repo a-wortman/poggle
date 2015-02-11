@@ -1,8 +1,18 @@
 require_relative '../requirementless'
+require_relative '../scope/scopifier'
 
 class AnyBits < Requirementless
+  include Scopifier
+
   def initialize(size)
-    @size = Bits.new ConstSize.new (size ? size : 1)
+    @size = Bits.new case size
+    when ConstSize
+      size
+    when UnboundedSize
+      size
+    else
+      ConstSize.new (size ? size : 1)
+    end
   end
 
   def match(bytes)
