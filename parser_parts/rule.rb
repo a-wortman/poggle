@@ -7,6 +7,7 @@ class Rule < BodyProxy
   def initialize(name, body)
     @name = name
     @body = body
+    self.enscopen(Scope.new)
   end
 
   def duplicate

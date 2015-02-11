@@ -4,15 +4,16 @@ module Scopifier
   end
 
   def enscopen(parent_scope)
-    @scope =
-      if self.class.instance_variable_get("@use_parent_scope")
-        # for reference_size, creep back up the scope since we don't look up the tree yet, if ever.
-        puts "Using parent scope: #{parent_scope.object_id}"
-        parent_scope
-      else
-#        puts "Using new child scope..."
-        parent_scope.child
-      end
+    # realized that sub-scoping will ALWAYS be wrong for poggle.
+    @scope = parent_scope
+#      if self.class.instance_variable_get("@use_parent_scope")
+#        # for reference_size, creep back up the scope since we don't look up the tree yet, if ever.
+#        puts "Using parent scope: #{parent_scope.object_id}"
+#        parent_scope
+#      else
+##        puts "Using new child scope..."
+#        parent_scope.child
+#      end
 
     # not sure how to just default to_enscopen to []...
     to_enscopen = self.class.to_enscopen || []
@@ -37,9 +38,9 @@ module Scopifier
       @to_enscopen = rest.unshift(var)
     end
 
-    def scopeOfParent
-      @use_parent_scope = true
-    end
+#    def scopeOfParent
+#      @use_parent_scope = true
+#    end
   end
 end
 
