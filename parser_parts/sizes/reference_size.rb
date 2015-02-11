@@ -44,8 +44,11 @@ class ReferenceSize
       raise "No value to extract, no function to extract data length == 0"
     elsif data.length == 1
       data[0]
+    elsif data.length == 2
+      # going with the big-endian interpretation because it matches class files for now.
+      data[1] * 256 + data[0]
     else
-      raise "No function to extract data"
+      raise "No function to extract data (#{data})"
     end
   end
 end
