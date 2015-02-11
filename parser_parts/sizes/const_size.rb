@@ -1,4 +1,8 @@
+require_relative '../scope/scopifier'
+
 class ConstSize
+  include Scopifier
+
   attr_reader :value
 
   def initialize(value)
