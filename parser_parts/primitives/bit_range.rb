@@ -1,6 +1,9 @@
 include Math
+require_relative "../scope/scopifier"
 
 class BitRange < Requirementless
+  include Scopifier
+
   def initialize(low, high)
     @low_orig = low
     @high_orig = high

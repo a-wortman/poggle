@@ -1,4 +1,9 @@
+require_relative '../scope/scopifier'
+
 class Div
+  include Scopifier
+  scopify :a, :b
+
   def initialize(a, b)
     @a = a
     @b = b
@@ -6,5 +11,9 @@ class Div
 
   def value
     @a.value / @b.value
+  end
+
+  def const
+    @a.const && @b.const
   end
 end
