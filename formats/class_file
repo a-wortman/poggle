@@ -86,7 +86,7 @@ interfaces_info :=
   : interfaces_entry{ifcount}
 
 fields_entry :=
-  u2:name_index:descriptor_index:count\attributes_count:(u2:attrib_len\u4:u1{attrib_len}){count}
+  u2:name_index:descriptor_index:count\attributes_count:attribute_info{count}
 
 fields_count := member_count
 fields_info :=
@@ -94,19 +94,19 @@ fields_info :=
   : fields_entry{fcount}
 
 methods_entry :=
-  u2:name_index:descriptor_index:count\attributes_count:(u2:attrib_len\u4:u1{attrib_len}){count}
+  u2:name_index:descriptor_index:count\attributes_count:attribute_info{count}
 
 methods_count := member_count
 methods_info :=
     mcount\methods_count
   : methods_entry{mcount}
 
-attributes_entry := u2:attrib_len\u4:u1{attrib_len}
+attribute_info := u2:attrib_len\u4:u1{attrib_len}
 
 attributes_count := member_count
 attributes_info :=
     acount\attributes_count
-  : attributes_entry{acount}
+  : attribute_info{acount}
 
 root :=
     magic
