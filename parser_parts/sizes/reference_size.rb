@@ -1,9 +1,20 @@
+require_relative '../scope/scopifier'
+
 class ReferenceSize
   include Scopifier
 
   def initialize(name)
     @name = name
-    @context = vars_context
+  end
+
+  def const
+    # false in that this isn't const until parse-time.
+    # false at gen-time.
+    false
+  end
+
+  def defined?
+    @scope.defined?(@name)
   end
 
   def value
@@ -14,7 +25,7 @@ class ReferenceSize
       extractFor(@scope.get(@name).value)
     else
       # this isn't matched yet, so the size is not concrete
-      VariableSize.new
+      raise "wtf value not defined"
     end
   end
 
