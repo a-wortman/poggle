@@ -36,6 +36,7 @@ super_class := u2
 member_count := u2
 
 CONSTANT_Class := 7
+CONSTANT_Class_info := CONSTANT_Class:name_index
 CONSTANT_Fieldref := 9
 CONSTANT_Methodref := 10
 CONSTANT_InterfaceMethodref := 11
@@ -59,9 +60,10 @@ name_index := u2
 name_and_type_index := u2
 class_index := u2
 string_index := u2
+descriptor_index := u2
 
 constant_pool_entry :=
-    (CONSTANT_Class:name_index)
+    CONSTANT_Class_info
   | (CONSTANT_Fieldref:class_index:name_and_type_index)
   | (CONSTANT_Methodref:class_index:name_and_type_index)
   | (CONSTANT_InterfaceMethodref:class_index:name_and_type_index)
@@ -76,28 +78,30 @@ constant_pool_entry :=
   | (CONSTANT_MethodType:u2)
   | (CONSTANT_InvokeDynamic:u2:u2)
 
-interfaces_entry := 0
+interfaces_entry := CONSTANT_Class_info
 
 interfaces_count := member_count
 interfaces_info :=
     ifcount\interfaces_count
   : interfaces_entry{ifcount}
 
-fields_entry := 0
+fields_entry :=
+  u2:name_index:descriptor_index:count\attributes_count:(u2:attrib_len\u4:u1{attrib_len}){count}
 
 fields_count := member_count
 fields_info :=
     fcount\fields_count
   : fields_entry{fcount}
 
-methods_entry := 0
+methods_entry :=
+  u2:name_index:descriptor_index:count\attributes_count:(u2:attrib_len\u4:u1{attrib_len}){count}
 
 methods_count := member_count
 methods_info :=
     mcount\methods_count
   : methods_entry{mcount}
 
-attributes_entry := 0
+attributes_entry := u2:attrib_len\u4:u1{attrib_len}
 
 attributes_count := member_count
 attributes_info :=
