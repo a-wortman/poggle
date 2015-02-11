@@ -2,6 +2,7 @@ require_relative './scope/scopifier'
 
 class RuleReference
   include Scopifier
+  scopify :rule
 
   def initialize(name)
     @name = name
@@ -44,7 +45,10 @@ class RuleReference
   end
 
   def match(bytes)
-    @rule.match(bytes)
+    puts "MATCHING RULE: #{@rule}"
+    r = @rule.match(bytes)
+    puts "MATCHED? #{r}"
+    r
   end
 
   def size_of
