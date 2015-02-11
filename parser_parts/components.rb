@@ -19,9 +19,9 @@ class Components
     end
 
     link_dependencies
+    @rules_by_name["root"].enscopen(Scope.new)
     infer_sizes
     check_sizes
-    @rules_by_name["root"].enscopen(Scope.new)
   end
 
   def unresolved_dependencies
