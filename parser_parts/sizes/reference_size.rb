@@ -1,15 +1,17 @@
 class ReferenceSize
-  def initialize(name, vars_context)
+  include Scopifier
+
+  def initialize(name)
     @name = name
     @context = vars_context
   end
 
   def value
-    if not @context[@name]
+    if not @scope.defined?(@name)
       raise "Variable #{@name} is undefined"
     end
-    if @context[@name].value
-      extractFor(@context[@name].value)
+    if @scope.get(@name).value
+      extractFor(@scope.get(@name).value)
     else
       # this isn't matched yet, so the size is not concrete
       VariableSize.new
@@ -17,8 +19,10 @@ class ReferenceSize
   end
 
   def to_s
-    if @context[@name]
-      @context[@name].to_s
+    return "SCOPE IS NOT SET" unless @scope
+
+    if @scope.defined?(@name)
+      @scope.get(@name).to_s
     else
       "undefined (variable: #{@name}) count"
     end

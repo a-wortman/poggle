@@ -1,6 +1,8 @@
 require_relative './scope/scopifier'
 
 class Rule < BodyProxy
+  include Scopifier
+  scopify :body
 
   def initialize(name, body)
     @name = name
