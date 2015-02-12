@@ -1,0 +1,29 @@
+adjust class_file so that Utf8_info parses the weird custom utf8 encoding.
+  current idea: read u1{count} and re-parse that as custom_utf8_codepoint{_}
+
+todo: ensure that
+  foo := a\A:(a\A:(a\A:byte{a}){a}){a}
+
+has each a scoped properly
+
+figure out how to handle mutually recursive rules
+  and locally recursive...
+
+a := b:0
+b := a:1
+
+causes a stack overflow
+
+  when fixed: tack on
+    | annotation_value | array_value
+  to element_value rule
+
+
+other issue;
+a := a:1
+
+does definitely cause stack overflow. not ok.
+
+
+
+solve character weirdness with rattler not reading "@" and "[" right...

@@ -35,48 +35,66 @@ super_class := u2
 
 member_count := u2
 
+reference_kind := 1-9
+
 CONSTANT_Class := 7
 CONSTANT_Class_info := CONSTANT_Class:name_index
 CONSTANT_Fieldref := 9
+CONSTANT_Fieldref_info := CONSTANT_Fieldref:class_index:name_and_type_index
 CONSTANT_Methodref := 10
+CONSTANT_Methodref_info := CONSTANT_Methodref:class_index:name_and_type_index
 CONSTANT_InterfaceMethodref := 11
+CONSTANT_InterfaceMethodref_info := CONSTANT_InterfaceMethodref:class_index:name_and_type_index
 CONSTANT_String := 8
+CONSTANT_String_info := CONSTANT_String:string_index
 CONSTANT_Integer := 3
+CONSTANT_Integer_info := CONSTANT_Integer:u4
 CONSTANT_Float := 4
+CONSTANT_Float_info := CONSTANT_Float:u4
 CONSTANT_Long := 5
+CONSTANT_Long_info := CONSTANT_Long:u4:u4
 CONSTANT_Double := 6
+CONSTANT_Double_info := CONSTANT_Double:u4:u4
 CONSTANT_NameAndType := 12
+CONSTANT_NameAndType_info := CONSTANT_NameAndType:name_index:descriptor_index
 CONSTANT_Utf8 := 1
+CONSTANT_Utf8_info := CONSTANT_Utf8:count\u2:u1{count}
 CONSTANT_MethodHandle := 15
+CONSTANT_MethodHandle_info := CONSTANT_MethodHandle:reference_kind:reference_index
 CONSTANT_MethodType := 16
+CONSTANT_MethodType_info := CONSTANT_MethodType:descriptor_index
 CONSTANT_InvokeDynamic := 18
+CONSTANT_InvokeDynamic_info := CONSTANT_InvokeDynamic:bootstrap_method_attr_index:name_and_type_index
 
 constant_pool_count := member_count
 constant_pool_info :=
     count\constant_pool_count
   : constant_pool_entry{count - 1}
 
+bootstrap_method_attr_index := u2
+string_index := u2
 name_index := u2
 name_and_type_index := u2
 class_index := u2
 string_index := u2
 descriptor_index := u2
+reference_index := u2
 
 constant_pool_entry :=
-    CONSTANT_Class_info
-  | (CONSTANT_Fieldref:class_index:name_and_type_index)
-  | (CONSTANT_Methodref:class_index:name_and_type_index)
-  | (CONSTANT_InterfaceMethodref:class_index:name_and_type_index)
-  | (CONSTANT_String:string_index)
-  | (CONSTANT_Integer:u4)
-  | (CONSTANT_Float:u4)
-  | (CONSTANT_Long:u4:u4)
-  | (CONSTANT_Double:u4:u4)
-  | (CONSTANT_NameAndType:u2:u2)
-  | (CONSTANT_Utf8:length\u2:u1{length})
-  | (CONSTANT_MethodHandle:u1:u2)
-  | (CONSTANT_MethodType:u2)
-  | (CONSTANT_InvokeDynamic:u2:u2)
+    CONSTANT_Class_info |
+    CONSTANT_Fieldref_info |
+    CONSTANT_Methodref_info |
+    CONSTANT_InterfaceMethodref_info |
+    CONSTANT_String_info |
+    CONSTANT_Integer_info |
+    CONSTANT_Float_info |
+    CONSTANT_Long_info |
+    CONSTANT_Double_info |
+    CONSTANT_NameAndType_info |
+    CONSTANT_Utf8_info |
+    CONSTANT_MethodHandle_info |
+    CONSTANT_MethodType_info |
+    CONSTANT_InvokeDynamic_info
 
 interfaces_entry := CONSTANT_Class_info
 
@@ -100,6 +118,89 @@ methods_count := member_count
 methods_info :=
     mcount\methods_count
   : methods_entry{mcount}
+
+attribute_ConstantValue := u2:u4:u2
+attribute_Code :=
+  u2:attr_len\u4:u2:u2:
+  code_len\u4:u1{code_len}:
+  exception_table_length\u2:(u2:u2:u2:u2){exception_table_length}:
+  attributes_count\u2:attribute_info{attributes_count}
+
+attribute_StackMapTable :=
+  u2:len\u4:u2:u1{len - 2}
+
+attribute_Exceptions :=
+  u2:u4:ex_count\u2:u2{ex_count}
+
+attribute_InnerClasses :=
+  u2:u4:num_classes\u2:(u2:u2:u2:u2){num_classes}
+
+attribute_EnclosingMethod :=
+  u2:u4:u2:u2
+
+attribute_Synthetic :=
+  u2:u4
+
+attribute_Signature :=
+  u2:u4:u2
+
+attribute_SourceFile :=
+  u2:u4:u2
+
+attribute_SourceDebugExtension :=
+  u2:len\u4:u1{len}
+
+attribute_LineNumberTable :=
+  u2:u4:line_num_table_len\u2:(u2:u2){line_num_table_len}
+
+attribute_LocalVariableTable :=
+  u2:u4:local_var_table_len\u2:(u2:u2:u2:u2:u2){local_var_table_len}
+
+attribute_LocalVariableTypeTable :=
+  u2:u4:local_var_type_table_len\u2:(u2:u2:u2:u2:u2){local_var_type_table_len}
+
+attribute_Deprecated :=
+  u2:u4
+
+annotation :=
+  u2:pair_count\u2:(u2:element_value){pair_count}
+const_value_index :=
+  ("B" | "C" | "D" | "F" | "I" | "J" | "S" | "Z" | "s"):u2
+
+enum_const_value :=
+  "e":u2:u2
+
+class_info_index :=
+  "c":u2
+
+annotation_value :=
+  "2":annotation
+
+array_value :=
+  "2":num_values\u2:element_value{num_values}
+
+element_value :=
+  const_value_index |
+  enum_const_value |
+  class_info_index
+
+attribute_RuntimeVisibleAnnotations :=
+  u2:u4:num_annotations\u2:annotation{num_annotations}
+
+attribute_RuntimeInvisibleAnnotations :=
+  u2:u4:num_annotations\u2:annotation{num_annotations}
+
+attribute_RuntimeVisibleParameterAnnotations :=
+  u2:u4:num_params\u1:(num_annotations\u2:annotation{num_annotations}){num_params}
+
+attribute_RuntimeInvisibleParameterAnnotations :=
+  u2:u4:num_params\u1:(num_annotations\u2:annotation{num_annotations}){num_params}
+
+attribute_AnnotationDefault :=
+  u2:u4:element_value
+
+attribute_BootstrapMethods :=
+  u2:u4:num_bootstrap_methods\u2:(u2:u2:u2){num_bootstrap_methods}
 
 attribute_info := u2:attrib_len\u4:u1{attrib_len}
 
