@@ -97,7 +97,7 @@ ext <- ~':ext:' ~newln exts ~newln ~newln    ~{
 exts <- ~'[' ext_str (~',' ext_str)* ~']'
 ext_str <- @('"' '.' ALNUM* '"')
 
-str <- ~'"' @((" " / ALNUM / "!")*) ~'"'
+str <- ~'"' @((" " / ALNUM / "!" / "@" / "[" / "]")*) ~'"'
 
 str2 <- ~'"' escaped_char* ~'"' {
   puts _
