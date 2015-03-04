@@ -28,4 +28,8 @@ class BitBody < Requirementless
   def to_s
     @body.to_s
   end
+
+  def to_j
+    "{\"type\": \"bit_body\", \"value\": #{@body}}"
+  end
 end

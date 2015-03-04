@@ -51,4 +51,8 @@ class Bytes
   def to_s
     "#{@size} #{@@unit}"
   end
+
+  def to_j
+    "{\"unit\": \"bytes\", \"value\": \"#{@size}\"}"
+  end
 end

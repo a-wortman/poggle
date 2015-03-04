@@ -91,7 +91,7 @@ size_const <- lit_num { ConstSize.new _ }
 size_label <- name { ReferenceSize.new _ }
 
 ext <- ~':ext:' ~newln exts ~newln ~newln    ~{
-  puts("Expected extensions: " + _.join(', '))
+  #puts("Expected extensions: " + _.join(', '))
   _
 }
 exts <- ~'[' ext_str (~',' ext_str)* ~']'

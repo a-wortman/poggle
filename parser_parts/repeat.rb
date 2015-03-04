@@ -7,7 +7,7 @@ class Repeat
   scopify :rule, :count
 
   def initialize(count, rule)
-    @data = []
+    @matches = []
     @count = count
     @rule = rule
   end
@@ -31,6 +31,7 @@ class Repeat
         bytes.revert
         return false
       end
+      @matches.push @rule.to_j # not sure if this works right.. think it does tho
     end
     true
   end
@@ -50,5 +51,9 @@ class Repeat
 
   def to_s
     "(#{@count} instance of #{@rule})"
+  end
+
+  def to_j
+    "{\"type\": \"repeat\", \"value\": [#{@matches.join(", ")}]}"
   end
 end

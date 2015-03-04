@@ -34,5 +34,9 @@ class Rule < BodyProxy
   def to_s
     "#{@name}: #{@body}"
   end
+
+  def to_j
+    "{ \"name\": \"#{@name}\", \"body\": #{@body.to_j}}"
+  end
 end
 

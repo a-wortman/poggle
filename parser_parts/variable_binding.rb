@@ -27,4 +27,8 @@ class VariableBinding < BodyProxy
   def to_s
     "('#{@name}', binding of #{@body})"
   end
+
+  def to_j
+    "{\"type\": \"variable\", \"name\": \"#{@name}\", \"value\": #{value}}"
+  end
 end

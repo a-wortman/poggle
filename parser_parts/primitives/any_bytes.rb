@@ -5,6 +5,7 @@ class AnyBytes < Requirementless
   include Scopifier
 
   def initialize(size)
+    @data = []
     @size = Bytes.new case size
     when ConstSize
       size
@@ -20,7 +21,6 @@ class AnyBytes < Requirementless
   end
 
   def match(bytes)
-    @data = []
     # and this is where we gotta handle
     # unbounded sizes...
     case @size.value
@@ -46,5 +46,12 @@ class AnyBytes < Requirementless
 
   def size_of
     @size
+  end
+
+  def to_j
+    bytes_str = @data.map do |b|
+      b.to_s(16)
+    end
+    "{\"type\": \"bytes\", \"value\": #{bytes_str}}"
   end
 end

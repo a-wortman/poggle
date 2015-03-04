@@ -30,4 +30,8 @@ class ConstSize
     return other unless other.const
     ConstSize.new(other.value * @value)
   end
+
+  def to_j
+    @value.to_s
+  end
 end

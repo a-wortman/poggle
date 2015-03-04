@@ -48,4 +48,8 @@ class Disjunction
   def to_s
     "(#{@a}, falling back to #{@b})"
   end
+
+  def to_j
+    "{\"type\": \"disjunction\", \"left\": #{@a.to_j}, \"right\": #{@b.to_j}}"
+  end
 end
