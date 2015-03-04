@@ -68,5 +68,9 @@ class Components
   def to_s
     @start.to_s
   end
+
+  def to_j
+    @start.to_j
+  end
 end
 

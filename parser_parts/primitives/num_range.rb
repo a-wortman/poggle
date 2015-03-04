@@ -43,10 +43,15 @@ class NumRange < Requirementless
       value = value + bytes.next * (256**i)
     end
 
+    @value = value
     value >= @low && value <= @high
   end
 
   def size_of
     Bytes.new ConstSize.new @byte_count
+  end
+
+  def to_j
+    "{\"type\": \"num_range\", \"low\": #{@low}, \"high\": #{@high}, \"value\": \"#{@value}\"}"
   end
 end

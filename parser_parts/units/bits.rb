@@ -48,4 +48,8 @@ class Bits
   def to_s
     "#{@size} bits"
   end
+
+  def to_j
+    "{\"unit\": \"bits\", \"value\": \"#{@size.to_j}\"}"
+  end
 end

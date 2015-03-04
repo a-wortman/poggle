@@ -68,4 +68,8 @@ class ByteBody < Requirementless
   def to_s
     "Literal value #{@byte.to_s} [specified as #{@byte.to_s(@base)} base #{@base}]"
   end
+
+  def to_j
+    "{\"type\": \"byte\", \"value\": \"#{@byte.to_s(16)}\"}"
+  end
 end

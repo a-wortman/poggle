@@ -43,4 +43,8 @@ class Conjunction
   def to_s
     "(#{@a} followed by #{@b})"
   end
+
+  def to_j
+    "{\"type\": \"conjunction\", \"left\": #{@a.to_j}, \"right\": #{@b.to_j}}"
+  end
 end

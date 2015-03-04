@@ -42,4 +42,14 @@ class RuleBody < BodyProxy
     size = @size || "Unbounded"
     "#{@body.to_s} with size #{size}"
   end
+
+  def to_j
+    size_j = if @size == nil
+               "{\"type\": \"unknown\"}"
+             else
+               @size.to_j
+             end
+
+    "{ \"size\": #{size_j}, \"body\": #{@body.to_j}}"
+  end
 end

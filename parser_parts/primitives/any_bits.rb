@@ -5,6 +5,7 @@ class AnyBits < Requirementless
   include Scopifier
 
   def initialize(size)
+    @data = []
     @size = Bits.new case size
     when ConstSize
       size
@@ -16,7 +17,6 @@ class AnyBits < Requirementless
   end
 
   def match(bytes)
-    @data = []
     idx = -1
     for i in 0..(@size.bits - 1)
       if i % 8 == 0
@@ -40,5 +40,12 @@ class AnyBits < Requirementless
 
   def size_of
     @size
+  end
+
+  def to_j
+    bits_s = @data.map do |b|
+      b.to_s
+    end
+    "{\"type\": \"any_bits\", \"value\": #{bits_s}}"
   end
 end
