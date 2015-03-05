@@ -61,6 +61,6 @@ class RuleReference
   end
 
   def to_j
-    "{\"name\": \"#{@name}\", \"rule\": #{@rule.to_j}}"
+    "#{@rule.to_j}"
   end
 end

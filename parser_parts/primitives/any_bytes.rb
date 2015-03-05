@@ -21,6 +21,7 @@ class AnyBytes < Requirementless
   end
 
   def match(bytes)
+    @data = []
     # and this is where we gotta handle
     # unbounded sizes...
     case @size.value

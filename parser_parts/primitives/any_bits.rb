@@ -17,6 +17,7 @@ class AnyBits < Requirementless
   end
 
   def match(bytes)
+    @data = []
     idx = -1
     for i in 0..(@size.bits - 1)
       if i % 8 == 0

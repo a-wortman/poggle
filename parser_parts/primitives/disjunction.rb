@@ -17,12 +17,15 @@ class Disjunction
     bytes.mark
     a_match = @a.match(bytes)
     if a_match
+      @match = @a
       true
     else
       bytes.reset
       b_match = @b.match(bytes)
       if not b_match
         bytes.revert
+      else
+        @match = @b
       end
       b_match
     end
@@ -50,6 +53,6 @@ class Disjunction
   end
 
   def to_j
-    "{\"type\": \"disjunction\", \"left\": #{@a.to_j}, \"right\": #{@b.to_j}}"
+    "#{@match.to_j}"
   end
 end

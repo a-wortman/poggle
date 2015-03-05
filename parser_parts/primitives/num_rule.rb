@@ -50,7 +50,7 @@ class NumRule < Requirementless
 
   def to_j
     bytes_s = @bytes.map do |b|
-      "\"b.to_s(16)\""
+      "\"#{b.to_s(16)}\""
     end
     "{\"type\": \"number\", \"value\": [#{bytes_s.join(", ")}]}"
   end
