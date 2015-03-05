@@ -49,4 +49,8 @@ class Matcher
   def to_s
     "Matcher for #{@bytes.length} bytes, pointer at #{@pointer}. #{@marks.count} marks counted."
   end
+
+  def to_j
+    "{\"byte\": #{@pointer}, \"bit\": #{@bitPointer}}"
+  end
 end
