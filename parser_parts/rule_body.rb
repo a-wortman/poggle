@@ -38,18 +38,24 @@ class RuleBody < BodyProxy
     @body.matched
   end
 
+  def match(bytes)
+    @body.match(bytes)
+  end
+
   def to_s
     size = @size || "Unbounded"
     "#{@body.to_s} with size #{size}"
   end
 
-  def to_j
-    size_j = if @size == nil
-               "{\"type\": \"unknown\"}"
-             else
-               @size.to_j
-             end
+  def size_j
+    if @size == nil
+      "{\"type\": \"unknown\"}"
+    else
+      @size.to_j
+    end
+  end
 
-    "{ \"size\": #{size_j}, \"body\": #{@body.to_j}}"
+  def to_j
+    "#{@body.to_j}"
   end
 end

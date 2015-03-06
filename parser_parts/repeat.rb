@@ -30,8 +30,9 @@ class Repeat
       if not repetition
         bytes.revert
         return false
+      else
+      #  @matches.push @rule.to_j # not sure if this works right.. think it does tho
       end
-      @matches.push @rule.to_j # not sure if this works right.. think it does tho
     end
     true
   end

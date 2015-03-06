@@ -1,0 +1,4 @@
+:components:
+a: byte{2}
+b := a:a
+root := b:b:b

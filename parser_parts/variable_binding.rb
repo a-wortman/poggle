@@ -29,6 +29,9 @@ class VariableBinding < BodyProxy
   end
 
   def to_j
-    "{\"type\": \"variable\", \"name\": \"#{@name}\", \"value\": #{value}}"
+    values_j = @body.matched.map do |b|
+      "\"#{b.to_s(16)}\""
+    end
+    "{\"type\": \"variable\", \"name\": \"#{@name}\", \"value\": [#{values_j.join(", ")}], \"num\": #{0}}"
   end
 end
