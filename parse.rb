@@ -11,9 +11,10 @@ parser = PoggleParser.parse!(grammarContents)
 
 data = File.open(dataFile, "r").read
 matched = parser.match(Matcher.new data)
-puts parser.to_j
 if matched
+  puts parser.to_j
 #  puts "[+] Matched!"
 else
+  puts "no match..."
 #  puts "[-] No match."
 end

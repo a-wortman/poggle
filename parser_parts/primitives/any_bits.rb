@@ -18,6 +18,8 @@ class AnyBits < Requirementless
 
   def match(bytes)
     @data = []
+    puts "I WAS CALLED"
+    @match_start = bytes.to_j
     idx = -1
     for i in 0..(@size.bits - 1)
       if i % 8 == 0
@@ -28,6 +30,7 @@ class AnyBits < Requirementless
       end
       @data[idx] |= bytes.next_bit
     end
+    @match_end = bytes.to_j
     true
   end
 
@@ -47,6 +50,10 @@ class AnyBits < Requirementless
     bits_s = @data.map do |b|
       b.to_s
     end
-    "{\"type\": \"any_bits\", \"value\": #{bits_s}}"
+    if @match_start == nil
+      puts "WAT"
+      raise "hell"
+    end
+    "{\"type\": \"any_bits\", \"value\": #{bits_s}, \"position\": {\"start\": #{@match_start}, \"end\": #{@match_end}}}"
   end
 end

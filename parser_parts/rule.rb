@@ -23,6 +23,10 @@ class Rule < BodyProxy
     @body.infer_size
   end
 
+  def match(bytes)
+    @body.match(bytes)
+  end
+
   def name
     @name
   end
@@ -36,7 +40,7 @@ class Rule < BodyProxy
   end
 
   def to_j
-    "{ \"name\": \"#{@name}\", \"body\": #{@body.to_j}}"
+    "{ \"name\": \"#{@name}\", \"size\": #{@body.size_j}, \"body\": #{@body.to_j}}"
   end
 end
 

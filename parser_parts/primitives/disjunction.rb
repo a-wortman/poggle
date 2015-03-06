@@ -17,6 +17,7 @@ class Disjunction
     bytes.mark
     a_match = @a.match(bytes)
     if a_match
+      puts "Going down the a branch..."
       @match = @a
       true
     else

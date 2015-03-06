@@ -22,15 +22,19 @@ class AnyBytes < Requirementless
 
   def match(bytes)
     @data = []
+    @match_start = bytes.to_j
     # and this is where we gotta handle
     # unbounded sizes...
+    puts "hi?"
+    puts "then wtf is @match_start? '#{@match_start}'"
+    puts self.object_id
     case @size.value
     when ConstSize
       for i in 0..(@size.bytes-1)
         if bytes.eof
           return false
         else
-          @data.unshift bytes.next
+          @data.push bytes.next
         end
       end
     when UnboundedSize
@@ -38,6 +42,7 @@ class AnyBytes < Requirementless
     else
       raise "Don't know how to handle #{@size.value.class}"
     end
+    @match_end = bytes.to_j
     true
   end
 
@@ -53,6 +58,10 @@ class AnyBytes < Requirementless
     bytes_str = @data.map do |b|
       b.to_s(16)
     end
-    "{\"type\": \"bytes\", \"value\": #{bytes_str}}"
+    if @match_start == nil
+      puts "WAT"
+      raise "hell"
+    end
+    "{\"type\": \"any_bytes\", \"value\": #{bytes_str}, \"position\": {\"start\": #{@match_start}, \"end\": #{@match_end}}}"
   end
 end

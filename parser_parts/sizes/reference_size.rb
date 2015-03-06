@@ -54,4 +54,20 @@ class ReferenceSize
       raise "No function to extract data (#{data})"
     end
   end
+
+  def self.e_f(data)
+    if data.length == 0
+      raise "No value to extract, no function to extract data length == 0"
+    elsif data.length == 1
+      data[0]
+    elsif data.length == 2
+      # going with the big-endian interpretation because it matches class files for now.
+      data[1] * 256 + data[0]
+    elsif data.length == 4
+      # ...
+      ((data[3] * 256 + data[2]) * 256 + data[1]) * 256 + data[0]
+    else
+      raise "No function to extract data (#{data})"
+    end
+  end
 end
