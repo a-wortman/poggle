@@ -31,7 +31,7 @@ class Repeat
         bytes.revert
         return false
       else
-      #  @matches.push @rule.to_j # not sure if this works right.. think it does tho
+        @matches.push @rule.to_j # not sure if this works right.. think it does tho
       end
     end
     true

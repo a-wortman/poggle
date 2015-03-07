@@ -46,10 +46,10 @@ class ReferenceSize
       data[0]
     elsif data.length == 2
       # going with the big-endian interpretation because it matches class files for now.
-      data[1] * 256 + data[0]
+      data[0] * 256 + data[1]
     elsif data.length == 4
       # ...
-      ((data[3] * 256 + data[2]) * 256 + data[1]) * 256 + data[0]
+      ((data[0] * 256 + data[1]) * 256 + data[2]) * 256 + data[3]
     else
       raise "No function to extract data (#{data})"
     end
