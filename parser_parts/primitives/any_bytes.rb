@@ -25,9 +25,6 @@ class AnyBytes < Requirementless
     @match_start = bytes.to_j
     # and this is where we gotta handle
     # unbounded sizes...
-    puts "hi?"
-    puts "then wtf is @match_start? '#{@match_start}'"
-    puts self.object_id
     case @size.value
     when ConstSize
       for i in 0..(@size.bytes-1)

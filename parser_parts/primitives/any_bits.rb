@@ -18,7 +18,6 @@ class AnyBits < Requirementless
 
   def match(bytes)
     @data = []
-    puts "I WAS CALLED"
     @match_start = bytes.to_j
     idx = -1
     for i in 0..(@size.bits - 1)
