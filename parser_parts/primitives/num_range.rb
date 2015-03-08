@@ -34,6 +34,7 @@ class NumRange < Requirementless
   end
 
   def match(bytes)
+    @match_start = bytes.to_j
     value = 0
     for i in 0..(@byte_count - 1)
       # little-endian
@@ -43,6 +44,7 @@ class NumRange < Requirementless
       value = value + bytes.next * (256**i)
     end
 
+    @match_end = bytes.to_j
     @value = value
     value >= @low && value <= @high
   end
@@ -52,6 +54,6 @@ class NumRange < Requirementless
   end
 
   def to_j
-    "{\"type\": \"num_range\", \"low\": #{@low}, \"high\": #{@high}, \"value\": \"#{@value}\"}"
+    "{\"type\": \"num_range\", \"low\": #{@low}, \"high\": #{@high}, \"value\": \"#{@value}\", \"position\": {\"start\": #{@match_start}, \"end\": #{@match_end}}}"
   end
 end
