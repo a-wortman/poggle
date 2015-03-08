@@ -16,7 +16,10 @@ class ByteBody < Requirementless
   end
 
   def match(bytes)
-    bytes.next == @byte
+    @match_start = bytes.to_j
+    match = bytes.next == @byte
+    @match_end = bytes.to_j
+    match
   end
 
   def value_for(byte, base)
@@ -70,6 +73,6 @@ class ByteBody < Requirementless
   end
 
   def to_j
-    "{\"type\": \"byte\", \"value\": \"#{@byte.to_s(16)}\"}"
+    "{\"type\": \"byte\", \"value\": \"#{@byte.to_s(16)}\", \"position\": {\"start\": #{@match_start}, \"end\": #{@match_end}}}"
   end
 end

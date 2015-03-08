@@ -7,7 +7,6 @@ class Repeat
   scopify :rule, :count
 
   def initialize(count, rule)
-    @matches = []
     @count = count
     @rule = rule
   end
@@ -25,6 +24,7 @@ class Repeat
   end
 
   def match(bytes)
+    @matches = []
     for i in 1..@count.value
       repetition = @rule.match(bytes)
       if not repetition

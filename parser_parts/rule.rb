@@ -24,7 +24,8 @@ class Rule < BodyProxy
   end
 
   def match(bytes)
-    @body.match(bytes)
+    @match_start = bytes.to_j
+    @body.match(bytes).tap { |m| @match_end = bytes.to_j }
   end
 
   def name
@@ -40,7 +41,7 @@ class Rule < BodyProxy
   end
 
   def to_j
-    "{ \"name\": \"#{@name}\", \"size\": #{@body.size_j}, \"body\": #{@body.to_j}}"
+    "{\"type\": \"rule\", \"name\": \"#{@name}\", \"size\": #{@body.size_j}, \"body\": #{@body.to_j}, \"position\": {\"start\": #{@match_start}, \"end\": #{@match_end}}}"
   end
 end
 
