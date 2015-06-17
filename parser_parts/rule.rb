@@ -7,6 +7,8 @@ class Rule < BodyProxy
   def initialize(name, body)
     @name = name
     @body = body
+    @match_num = 0
+
     self.enscopen(Scope.new)
   end
 
@@ -25,7 +27,7 @@ class Rule < BodyProxy
 
   def match(bytes)
     @match_start = bytes.to_j
-    @body.match(bytes).tap { |m| @match_end = bytes.to_j }
+    @body.match(bytes).tap { |m| @match_end = bytes.to_j; @match_num = @match_num + 1 }
   end
 
   def name
@@ -40,8 +42,8 @@ class Rule < BodyProxy
     "#{@name}: #{@body}"
   end
 
-  def to_j
-    "{\"type\": \"rule\", \"name\": \"#{@name}\", \"size\": #{@body.size_j}, \"body\": #{@body.to_j}, \"position\": {\"start\": #{@match_start}, \"end\": #{@match_end}}}"
+ def to_j
+    "{\"type\": \"rule\", \"id\": \"#{self.object_id}-#{@match_num}\", \"name\": \"#{@name}\", \"size\": #{@body.size_j}, \"body\": #{@body.to_j}, \"position\": {\"start\": #{@match_start}, \"end\": #{@match_end}}}"
   end
 end
 
