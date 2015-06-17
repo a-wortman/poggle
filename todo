@@ -5,3 +5,8 @@ todo: ensure that
   foo := a\A:(a\A:(a\A:byte{a}){a}){a}
 
 has each a scoped properly
+
+add support for warning/verification steps.
+  semantic checks like x := u2 #{ x\ -> class_info[x] & class_info[x].tag == foo }
+
+

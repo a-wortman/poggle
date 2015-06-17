@@ -10,6 +10,7 @@ class VariableBinding < BodyProxy
   def initialize(name, body)
     @name = name
     @body = body
+    @match_count = 0
   end
 
   def value
@@ -24,6 +25,7 @@ class VariableBinding < BodyProxy
     @match_start = bytes.to_j
     matched = @body.match(bytes)
     @match_end = bytes.to_j
+    @match_count = @match_count + 1
     matched
   end
 
@@ -39,6 +41,6 @@ class VariableBinding < BodyProxy
     values_j = @body.matched.map do |b|
       "\"#{b.to_s(16)}\""
     end
-    "{\"type\": \"variable\", \"name\": \"#{@name}\", \"value\": [#{values_j.join(", ")}], \"num\": #{0}, \"position\": {\"start\": #{@match_start}, \"end\": #{@match_end}}}"
+    "{\"type\": \"variable\", \"id\": \"#{self.object_id}-#{@match_count}\", \"name\": \"#{@name}\", \"value\": [#{values_j.join(", ")}], \"num\": #{ReferenceSize.e_f(@body.matched)}, \"position\": {\"start\": #{@match_start}, \"end\": #{@match_end}}}"
   end
 end
