@@ -4,7 +4,7 @@ require_relative './scope/scopifier'
 class Repeat
 
   include Scopifier
-  scopify :rule, :count
+  scopify :rule
 
   def initialize(count, rule)
     @count = count
@@ -25,16 +25,35 @@ class Repeat
 
   def match(bytes)
     @matches = []
-    for i in 1..@count.value
-      repetition = @rule.match(bytes)
-      if not repetition
-        bytes.revert
-        return false
-      else
-        @matches.push @rule.to_j # not sure if this works right.. think it does tho
+    case @count
+    when UnboundedSize
+      bytes.mark
+      while true
+        bytes.mark
+        repetition = @rule.match(bytes)
+        if not repetition
+          bytes.revert
+          return true
+        else
+          bytes.forget
+          @matches.push @rule.to_j
+        end
       end
+    else
+      if @count.value > 0
+        bytes.mark
+      end
+      for i in 1..@count.value
+        repetition = @rule.match(bytes)
+        if not repetition
+          bytes.revert
+          return false
+        else
+          @matches.push @rule.to_j # not sure if this works right.. think it does tho
+        end
+      end
+      true
     end
-    true
   end
 
   def duplicate

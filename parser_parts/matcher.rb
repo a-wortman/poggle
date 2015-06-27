@@ -41,6 +41,10 @@ class Matcher
     @pointer = @marks.shift
   end
 
+  def forget
+    @marks.shift
+  end
+
   def reset
     revert
     mark
