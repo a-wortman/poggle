@@ -4,12 +4,8 @@ require 'pathname'
 require 'poggle_parser'
 require 'parser_parts/matcher'
 
-dirs = Dir.glob("fixtures/metagrammars/**/*")
-dirs = dirs.select { |name| File.file? name }
-
 good_grammars = Dir.glob("spec/fixtures/metagrammars/good/*")
 good_files = Dir.glob("spec/fixtures/files/good/*")
-  #dirs.select { |name| name =~ /\/good\// }
 
 bad_grammars = Dir.glob("spec/fixtures/metagrammars/bad/*")
 
